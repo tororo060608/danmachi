@@ -40,7 +40,8 @@
 	  (y 0) ;point y
 	  (speed 5) ;verosity
 	  ;load image
-	  (player-img (load-png-image "sample.png")))
+	  (player-img (load-png-image (to-s *dir-path*
+					    "/sample.png"))))
           
       (sdl:update-display)  ;update
 
