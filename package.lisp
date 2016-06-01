@@ -1,5 +1,5 @@
 ;;;; package.lisp
 
 (defpackage #:danmachi
-  (:use #:cl :alexandria))
+  (:use #:cl :alexandria #:sdlutils))
 
