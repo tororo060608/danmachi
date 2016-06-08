@@ -10,8 +10,10 @@
   :license "Specify license here"
   :serial t
   :components ((:file "package")
+	       (:file "pathname")
 	       (:file "key")
 	       (:file "object")
 	       (:file "main"))
-  :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate))
+  :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
+
 
