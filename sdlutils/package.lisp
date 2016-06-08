@@ -21,6 +21,10 @@
 	   KEY-PRESSED-P 
 	   KEY-DOWN-P
 	   KEY-UP-P 
+	   update-key-state
+	   next-key-state
+	   update-joy-state
+	   update-input
 	   DEFKEYSTATE 
 	   DEFJOYSTICK 
 	   AXIS-VALUE-MINUS-P
