@@ -7,12 +7,12 @@
 		  (window-height game)
 		  :title-caption "danmachi")
       (setf (sdl:frame-rate) 60)
-			(load-images '(:test-enemy "test_enemy.png"))
+			(gameimage-load)
 #|
       (add-object (make-instance 'player 
 				 :point-x 0 
 				 :point-y 0
-				 :image (load-png-image "sample.png"))
+				 :image (get-image :player))
 		  game)
 |#
       (add-object (make-instance 'test-enemy 

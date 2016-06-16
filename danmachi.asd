@@ -11,6 +11,7 @@
   :serial t
   :components ((:file "package")
 							 (:file "pathname")
+							 (:file "loadimage")
 							 (:file "key")
 							 (:file "object")
 							 (:file "enemy")
