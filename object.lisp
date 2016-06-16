@@ -6,17 +6,25 @@
   object-list
   (keystate (make-instance 'keystate)))
 
-(defgeneric add-object (obj game))
-(defun update-game (game)
-  (mapc (lambda (obj) (update obj game)) (object-list game)))
-(defun draw-game (game)
-  (mapc (lambda (obj) (draw obj game)) (object-list game)))
-
 ;;orginal object
 (define-class gameobject ()
   point-x
   point-y
+	(vx 0)
+	(vy 0)
+	(alive t)
   image)
+
+(defun kill (obj)
+	(setf (alive obj) nil))
+
+(defgeneric add-object (obj game))
+(defun update-game (game)
+  (mapc (lambda (obj) (update obj game)) (object-list game))
+	(remove-if-not #'alive (object-list game)))
+(defun draw-game (game)
+  (mapc (lambda (obj) (draw obj game)) (object-list game)))
+
 
 ; add new object
 (defmethod add-object ((obj gameobject) (game game))
@@ -29,7 +37,19 @@
 			   (round (point-x object))
 			   (round (point-y object))))
 
-(defmethod update ((object gameobject) (game game)))
+(defmethod update ((object gameobject) (game game))
+	(incf (point-x object) (vx object))
+	(incf	(point-y object) (vy object)))
+
+;out-gamearea detect
+(defun out-of-gamearea-p (object game)
+	(let* ((margin 50)
+				 (left (- margin))
+				 (right (+ (window-width game) margin))
+				 (top (- margin))
+				 (bottom (+ (window-height game) margin)))
+		(not (and (<= left (point-x object) right)
+							(<= top (point-y object) bottom)))))
 
 ;;player object
 (define-class player (gameobject))
