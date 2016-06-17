@@ -13,7 +13,8 @@
 	       (:file "pathname")
 	       (:file "key")
 	       (:file "object")
-	       (:file "collide")
+	       (:file "create")
+	       (:file "contact")
 	       (:file "main"))
   :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 

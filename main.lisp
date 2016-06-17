@@ -7,11 +7,16 @@
 		  (window-height game)
 		  :title-caption "danmachi")
       (setf (sdl:frame-rate) 60)
-      (add-object (make-instance 'player 
-				 :point-x 0 
-				 :point-y 0
-				 :image (load-png-image "sample.png"))
+      (add-object (make-instance 'player
+				 :point-x (* 32 1)
+				 :point-y (* 32 1)
+				 :width 32
+				 :height 32
+				 :image (load-png-image "chara1.png"))
 		  game)
+      (create-wall wall-list game)
+      (create-floor floor-list game)
+
       ;;event
       (sdl:with-events()
 	(:quit-event () t)
@@ -24,16 +29,7 @@
 	(:idle ()
 	       (sdl:clear-display sdl:*black*)
 	       (update-game game)
+	       (round-robin interact-update (object-list game))
 	       (draw-game game)
 	       (sdl:update-display)
 	       (next-key-state (keystate game)))))))
-
-
-
-
-
-
-
-
-
-
