@@ -22,8 +22,8 @@
 (define-class enemy (gameobject))
 
 ;change enemystate
-;(change-enemy-state (<trans>*))
-;<trans>:((state-from state-to timer) &body body)
+;(change-enemy-state (<shift>*))
+;<shift>:((state-from state-to timer) &body body)
 (defmacro change-enemy-state (enemy &body body)
 	`(cond ,@(loop for b in body
 								collect 
@@ -101,3 +101,4 @@
 								 (- (bullet-v e)) 0 game)
 		 (set-bullet e 'tenemy2-bullet 
 								 0 (- (bullet-v e)) game))))
+
