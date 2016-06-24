@@ -20,7 +20,8 @@
 	  (getf *image-table* indicator) image)))
 
 (defun load-images (&rest i-and-names)
-  (mapc #'(lambda (ip) (apply #'load-image ip)) i-and-names))
+  (mapc #'(lambda (ip) (apply #'load-image ip)) 
+	(make-pairs i-and-names)))
 
 (defun load-animations (&rest args)
   (mapc #'(lambda (arg) (apply #'load-animation arg)) args))
