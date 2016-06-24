@@ -23,8 +23,9 @@
 	  floor-list))
 
 
-(defparameter wall-list '((0 0)
-			  (0 1)
+
+(defparameter wall-list '((3 3)))
+#|			  (0 1)
 			  (0 2)
 			  (0 3)
 			  (0 4)
@@ -39,7 +40,7 @@
 			  (1 4)
 			  (2 4)
 			  (3 4)))
-
+|#
 
 (defparameter  floor-list '((1 1)
 			    (1 2)

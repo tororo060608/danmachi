@@ -1,6 +1,5 @@
 ;;;; danmachi.asd
 
-
 ;; To load eval (require :danmachi)
 ;; To reload eval (asdf:operate 'asdf:load-op :danmachi)
 

@@ -8,8 +8,8 @@
 		  :title-caption "danmachi")
       (setf (sdl:frame-rate) 60)
       (add-object (make-instance 'player
-				 :point-x (* 32 1)
-				 :point-y (* 32 1)
+				 :point-x (* 32 5)
+				 :point-y (* 32 5)
 				 :width 32
 				 :height 32
 				 :image (load-png-image "chara1.png"))
@@ -29,7 +29,7 @@
 	(:idle ()
 	       (sdl:clear-display sdl:*black*)
 	       (update-game game)
-	       (round-robin interact-update (object-list game))
+	       (round-robin #'interact-update (object-list game))
 	       (draw-game game)
 	       (sdl:update-display)
 	       (next-key-state (keystate game)))))))

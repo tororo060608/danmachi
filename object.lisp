@@ -18,6 +18,8 @@
 (define-class gameobject ()
   point-x
   point-y
+  (vx 0)
+  (vy 0)
   width
   height
   image)
@@ -33,57 +35,30 @@
 			   (round (point-x object))
 			   (round (point-y object))))
 
-(defun judge-contact (obj1 obj2)
-  ;l left
-  ;r right
-  ;t top
-  ;u under
-  (let ((lx1 (point-x obj1))
-	(rx1 (+ (point-x obj1) (width obj1)))
-	(ty1 (point-y obj1))
-	(uy1 (+ (point-y obj1) (height obj1)))
-	(lx2 (point-x obj2))
-	(rx2 (+ (point-x obj2) (width obj2)))
-	(ty2 (point-y obj2))
-	(uy2 (+ (point-y obj2) (height obj2)))
-	(contact-side-list ()))
-	
-    (if (<= 0 (* (- rx1 lx2) (- rx2 lx1)))
-	(push 'right contact-side-list))
-    (if (<= 0 (* (- rx2 lx1) (- rx1 lx2)))
-	(push 'left contact-side-list))
-    (if (<= 0 (* (- uy2 ty1) (- uy1 ty2)))
-	(push 'top contact-side-list))
-    (if (<= 0 (* (- uy1 ty2) (- uy2 ty1)))
-	(push 'under contact-side-list))
 
-    contact-side-list
-    ))
-
-
-(defmethod update ((object gameobject) (game game)))
+(defmethod update ((object gameobject) (game game))
+  (incf (point-x object) (vx object))
+  (incf (point-y object) (vy object)))
 
 ;;player object
-(define-class player (gameobject))
+(define-class player (gameobject)
+  (player-speed 5))
 
 (defmethod update ((p player) (game game))
-  (let ((x (point-x p)) ;point x
-	(y (point-y p)) ;point y
-	(speed 5) ;verosity
-	(dx 0) (dy 0))
+  (with-accessors ((vx vx) (vy vy) (x point-x) (y point-y)
+		   (speed player-speed)) p
     (with-slots (up down right left) (keystate game)
-      (cond ((key-pressed-p right) (incf dx speed))
-	    ((key-pressed-p left)  (decf dx speed)))
-      (cond ((key-pressed-p up)   (decf dy speed))
-	    ((key-pressed-p down) (incf dy speed))))
+      (cond ((key-pressed-p right) (setf vx speed))
+	    ((key-pressed-p left)  (setf vx (- speed)))
+	    (t (setf vx 0)))
+      (cond ((key-pressed-p up)   (setf vy (- speed)))
+	    ((key-pressed-p down) (setf vy speed))
+	    (t (setf vy 0))))
     ;; slanting move
-    (when (and (/= dx 0) (/= dy 0))
-      (setf dx (/ dx (sqrt 2)) dy (/ dy (sqrt 2))))
-    ;;move->my point
-    (setf (point-x p) (+ x dx))
-    (setf (point-y p) (+ y dy))
-    ))
-
+    (when (and (/= vx 0) (/= vy 0))
+      (setf vx (/ vx (sqrt 2))
+	    vy (/ vy (sqrt 2)))))
+  (call-next-method))
 
 ;;wall object
 (define-class game-wall (gameobject))
