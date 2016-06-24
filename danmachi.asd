@@ -8,15 +8,18 @@
   :author "Your Name <your.name@example.com>"
   :license "Specify license here"
   :serial t
-  :components ((:file "package")
-							 (:file "pathname")
-							 (:file "loadimage")
-							 (:file "key")
-							 (:file "object")
-							 (:file "enemy")
-							 (:file "create")
-							 (:file "contact")
-							 (:file "main"))
+  :components ((:module "src"
+		:serial t
+		:components
+		((:file "package")
+		 (:file "pathname")
+		 (:file "loadimage")
+		 (:file "key")
+		 (:file "object")
+		 (:file "enemy")
+		 (:file "create")
+		 (:file "contact")
+		 (:file "main"))))
   :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 
 
