@@ -25,7 +25,7 @@
      (defmethod ,method-name (,arg1 ,arg2)
        ,@body)
      (defmethod ,method-name (,arg2 ,arg1)
-       (,method-name ,(car arg1) ,(car arg2)))))
+       ,@body)))
 
 
 (defmacro defcollide (arg1 arg2 &body body)

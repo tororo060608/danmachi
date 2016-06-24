@@ -1,6 +1,5 @@
 ;;;; danmachi.asd
 
-
 ;; To load eval (require :danmachi)
 ;; To reload eval (asdf:operate 'asdf:load-op :danmachi)
 
@@ -15,6 +14,8 @@
 							 (:file "key")
 							 (:file "object")
 							 (:file "enemy")
+							 (:file "create")
+							 (:file "contact")
 							 (:file "main"))
   :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 

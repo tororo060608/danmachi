@@ -8,17 +8,18 @@
 		  :title-caption "danmachi")
       (setf (sdl:frame-rate) 60)
 			(gameimage-load)
-#|
-      (add-object (make-instance 'player 
-				 :point-x 0 
-				 :point-y 0
-				 :image (get-image :player))
+
+      (add-object (make-instance 'player
+				 :point-x (* 32 5)
+				 :point-y (* 32 5)
+				 :width 32
+				 :height 32
+				 :image (load-png-image "chara1.png"))
 		  game)
-|#
-      (add-object (make-instance 'test-enemy 
-																 :point-x 320 
-																 :point-y 240)
-		  game)
+
+      (create-wall wall-list game)
+      (create-floor floor-list game)
+
       ;;event
       (sdl:with-events()
 	(:quit-event () t)
@@ -31,16 +32,7 @@
 	(:idle ()
 	       (sdl:clear-display sdl:*black*)
 	       (update-game game)
+	       (round-robin #'interact-update (object-list game))
 	       (draw-game game)
 	       (sdl:update-display)
 	       (next-key-state (keystate game)))))))
-
-
-
-
-
-
-
-
-
-
