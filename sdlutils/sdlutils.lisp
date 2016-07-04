@@ -53,8 +53,9 @@
   (if test (print exp) exp))
 
 (defun make-pairs (list)
-  (letrec ((lis list) (acc nil))
-    (if (null (cdr lis))
-	(nreverse acc)
-	(destructuring-bind (a b . c) lis
-	  (rec c (cons (list a b) acc))))))
+  (labels ((rec (lis acc)
+	     (if (null (cdr lis))
+		 (nreverse acc)
+		 (destructuring-bind (a b . c) lis
+		   (rec c (cons (list a b) acc))))))
+    (rec list nil)))

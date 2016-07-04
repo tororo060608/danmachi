@@ -12,7 +12,7 @@
 (define-class gameobject ()
   point-x
   point-y
-	(alive t)
+  (alive t)
   (vx 0)
   (vy 0)
   width
@@ -26,9 +26,13 @@
 (defun update-game (game)
   (mapc (lambda (obj) (update obj game)) (object-list game))
 	(remove-if-not #'alive (object-list game)))
-(defun draw-game (game)
-  (mapc (lambda (obj) (draw obj game)) (object-list game)))
 
+(defun draw-game (game)
+  (mapc (lambda (obj) (draw obj game)) (object-list game))
+  ;描画順について応急策. 解決次第消してよし
+  (draw (find-if (lambda (obj) (typep obj 'player))
+		 (object-list game))
+	game))
 
 ; add new object
 (defmethod add-object ((obj gameobject) (game game))
@@ -57,7 +61,10 @@
 
 ;;player object
 (define-class player (gameobject)
-  (player-speed 5))
+  (player-speed 5)
+  (width 32)
+  (height 32)
+  (image (get-image :player)))
 
 (defmethod update ((p player) (game game))
   (with-accessors ((vx vx) (vy vy) (x point-x) (y point-y)
@@ -76,7 +83,13 @@
   (call-next-method))
 
 ;;wall object
-(define-class game-wall (gameobject))
+(define-class game-wall (gameobject)
+  (width 32)
+  (height 32)
+  (image (get-image :wall)))
 
 ;;floor object
-(define-class game-floor (gameobject))
+(define-class game-floor (gameobject)
+  (width 32)
+  (height 32)
+  (image (get-image :floor)))
