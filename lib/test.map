@@ -1,0 +1,17 @@
+;; test stage map
+;; lispと同様にコメントアウト可能
+;; ファイルの最初にマップロード時のconfigを書く
+(:table (p (player game-floor)
+	 w game-wall
+	 space game-floor)
+ :size (10 10))
+w w w w w w w w w w
+w                 w
+w                 w
+w                 w
+w                 w
+w       p         w
+w                 w
+w                 w
+w                 w
+w w w w w w w w w w

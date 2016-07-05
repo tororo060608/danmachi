@@ -8,7 +8,7 @@
 		  :title-caption "danmachi")
       (setf (sdl:frame-rate) 60)
       (gameimage-load)
-      
+#|      
       (add-object (make-instance 'player
 				 :point-x (* 32 5)
 				 :point-y (* 32 5)
@@ -19,6 +19,8 @@
 
       (create-wall wall-list game)
       (create-floor floor-list game)
+|#
+      (load-map "test.map" game)
 
       ;;event
       (sdl:with-events()
