@@ -17,6 +17,7 @@
   (vy 0)
   width
   height
+	(atk 0)
   image)
 
 (defun kill (obj)

@@ -16,6 +16,7 @@
       (decf (muteki-count chr))))
 
 (defmethod update ((chr gamecharacter) game)
+	(call-next-method)
   (dec-muteki-frame chr)
   (alive-detect chr game)
   (when (out-of-gamearea-p chr game)
