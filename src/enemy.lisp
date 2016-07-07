@@ -1,7 +1,8 @@
 (in-package :danmachi)
 
 ;enemy base class
-(define-class enemy (gamecharacter))
+(define-class enemy (gamecharacter)
+	(atk 50))
 
 ;enemy bullet base class
 (define-class enemy-bullet (bullet))
@@ -73,6 +74,7 @@
 
 ;bullet
 (define-class tenemy2-bullet (enemy-bullet)
+	(atk 100)
 	(image (get-image :test-bullet)))
 
 (defmethod update ((e test-enemy2) (game game))

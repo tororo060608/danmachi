@@ -84,6 +84,16 @@
     (obj2 gameobject))
 
 
-(definteract-method interact-update (obj1 player) (obj2 game-wall)
-  (when (collidep obj1 obj2)
-    (divide-half obj1 obj2 (vx obj1) (vy obj1))))
+(definteract-method interact-update (character gamecharacter) (wall game-wall)
+  (when (collidep character wall)
+    (divide-half character wall (vx character) (vy character))))
+
+(definteract-method interact-update (player player) (enemy enemy)
+  (when (collidep player enemy)
+		(attack enemy player)
+    (divide-half player enemy (vx player) (vy player))))
+
+(definteract-method interact-update (player player) (bullet enemy-bullet)
+  (when (collidep player bullet)
+		(attack bullet player)))
+
