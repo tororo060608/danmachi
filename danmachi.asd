@@ -16,6 +16,8 @@
 		 (:file "loadimage")
 		 (:file "key")
 		 (:file "object")
+		 (:file "character")
+		 (:file "player")
 		 (:file "enemy")
 		 (:file "create")
 		 (:file "contact")

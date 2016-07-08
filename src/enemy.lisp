@@ -1,12 +1,15 @@
 (in-package :danmachi)
 
-;bullet base class
-(define-class bullet (gameobject))
+;enemy base class
+(define-class enemy (gamecharacter)
+	(width 32)
+	(height 32)
+	(atk 50))
 
-(defmethod update ((b bullet) (game game))
-	(call-next-method)
-	(when (out-of-gamearea-p b game)
-		(kill b)))
+;enemy bullet base class
+(define-class enemy-bullet (bullet)
+	(width 32)
+	(height 32))
 
 ;set bullet
 (defun set-bullet (obj bullet-class vx vy game)
@@ -17,9 +20,6 @@
 														 :point-y (point-y obj)) 
 							game))
 
-
-;enemy base class
-(define-class enemy (gameobject))
 
 ;change enemystate
 ;(change-enemy-state (<shift>*))
@@ -77,7 +77,8 @@
 	(bullet-v 3))
 
 ;bullet
-(define-class tenemy2-bullet (bullet)
+(define-class tenemy2-bullet (enemy-bullet)
+	(atk 100)
 	(image (get-image :test-bullet)))
 
 (defmethod update ((e test-enemy2) (game game))
