@@ -26,13 +26,16 @@
 (defgeneric add-object (obj game))
 (defun update-game (game)
   (mapc (lambda (obj) (update obj game)) (object-list game))
-	(remove-if-not #'alive (object-list game)))
+	(setf (object-list game)
+				(remove-if-not #'alive (object-list game))))
 
 (defun draw-game (game)
   (mapc (lambda (obj) (draw obj game)) (object-list game))
   ;描画順について応急策. 解決次第消してよし
+#|
   (draw (find-if (lambda (obj) (typep obj 'player))
 		 (object-list game))
+|#
 	game))
 
 ; add new object

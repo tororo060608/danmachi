@@ -2,10 +2,14 @@
 
 ;enemy base class
 (define-class enemy (gamecharacter)
+	(width 32)
+	(height 32)
 	(atk 50))
 
 ;enemy bullet base class
-(define-class enemy-bullet (bullet))
+(define-class enemy-bullet (bullet)
+	(width 32)
+	(height 32))
 
 ;set bullet
 (defun set-bullet (obj bullet-class vx vy game)
