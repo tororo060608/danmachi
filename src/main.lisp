@@ -8,12 +8,6 @@
 		  :title-caption "danmachi")
       (setf (sdl:frame-rate) 60)
       (gameimage-load)
-;mapシステム不調のため手動
-      (add-object (make-instance 'test-enemy2
-				 :point-x (* 32 7)
-				 :point-y (* 32 6))
-		  game)
-
 #|      
       (add-object (make-instance 'player
 				 :point-x (* 32 5)

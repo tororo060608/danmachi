@@ -32,11 +32,14 @@
 (defun draw-game (game)
   (mapc (lambda (obj) (draw obj game)) (object-list game))
   ;描画順について応急策. 解決次第消してよし
+	(let ((p (find-if (lambda (obj) (typep obj 'player))
+						 (object-list game))))
+		(when  p (draw p game))))
 #|
   (draw (find-if (lambda (obj) (typep obj 'player))
-		 (object-list game))
+		 (object-list game)))
+	game)
 |#
-	game))
 
 ; add new object
 (defmethod add-object ((obj gameobject) (game game))
