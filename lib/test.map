@@ -4,15 +4,15 @@
 (:table (p (player game-floor)
 	 w game-wall
 	 space game-floor
-	 a (test-enemy2 game-floor))
+	 a (test-enemy-react game-floor))
  :size (10 10))
 w w w w w w w w w w
 w                 w
 w                 w
 w             a   w
 w                 w
-w       p         w
 w                 w
 w                 w
 w                 w
+w p               w
 w w w w w w w w w w

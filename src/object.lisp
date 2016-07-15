@@ -17,7 +17,7 @@
   (vy 0)
   width
   height
-	(atk 0)
+  (atk 0)
   image)
 
 (defun kill (obj)
@@ -64,7 +64,7 @@
 				 (top (- margin))
 				 (bottom (+ (window-height game) margin)))
 		(not (and (<= left (point-x object) right)
-							(<= top (point-y object) bottom)))))
+			  (<= top (point-y object) bottom)))))
 
 ;;wall object
 (define-class game-wall (gameobject)
