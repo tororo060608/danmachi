@@ -4,6 +4,7 @@
   (window-width 640)
   (window-height 480)
   object-list
+  floor-list
   (keystate (make-instance 'keystate)))
 
 (defgeneric add-object (obj game))
@@ -17,29 +18,21 @@
   (vy 0)
   width
   height
-	(atk 0)
+  (atk 0)
   image)
 
 (defun kill (obj)
-	(setf (alive obj) nil))
+  (setf (alive obj) nil))
 
 (defgeneric add-object (obj game))
 (defun update-game (game)
   (mapc (lambda (obj) (update obj game)) (object-list game))
-	(setf (object-list game)
-				(remove-if-not #'alive (object-list game))))
+  (setf (object-list game)
+	(remove-if-not #'alive (object-list game))))
 
 (defun draw-game (game)
-  (mapc (lambda (obj) (draw obj game)) (object-list game))
-  ;描画順について応急策. 解決次第消してよし
-	(let ((p (find-if (lambda (obj) (typep obj 'player))
-						 (object-list game))))
-		(when  p (draw p game))))
-#|
-  (draw (find-if (lambda (obj) (typep obj 'player))
-		 (object-list game)))
-	game)
-|#
+  (mapc (lambda (obj) (draw obj game)) (floor-list game))
+  (mapc (lambda (obj) (draw obj game)) (object-list game)))
 
 ; add new object
 (defmethod add-object ((obj gameobject) (game game))
@@ -83,6 +76,9 @@
   (width 32)
   (height 32)
   (image (get-image :floor)))
+
+(defmethod add-object ((floor game-floor) (game game))
+  (push floor (floor-list game)))
 
 ;bullet base class
 (define-class bullet (gameobject))
