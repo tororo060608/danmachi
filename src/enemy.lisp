@@ -31,7 +31,7 @@
 		  ,@(cdr b)
 		  (setf (state ,enemy) ,(nth 1 (car b)))))))
 
-					;set 4way random velocity
+;set 4way random velocity
 (defun set-4way-randv (enemy velocity)
   (let* ((dice (mod (random 100) 4)) 
 	 (v (case dice
@@ -42,14 +42,14 @@
     (setf (vx enemy) (first v)
 	  (vy enemy) (second v))))
 
-					;clear velocity
+;clear velocity
 (defun stop-enemy (enemy)
   (setf (vx enemy) 0
 	(vy enemy) 0))
 
-					;---define enemys---
+;---define enemys---
 
-					;///test enemy///
+;///test enemy///
 (define-class test-enemy (enemy)
   (image (get-image :test-enemy))
   (state :stop)
@@ -65,7 +65,7 @@
 			    ((:move :stop (move-timer e))
 			     (stop-enemy e))))
 
-					;///test enemy2///
+;///test enemy2///
 (define-class test-enemy2 (enemy)
   (image (get-image :test-enemy))
   (state :stop1)
@@ -81,24 +81,42 @@
   (image (get-image :test-bullet)))
 
 (defmethod update ((e test-enemy2) (game game))
-  (call-next-method)
-  (change-enemy-state e
-		      ((:stop1 :move1 (stop-timer e))
-		       (set-4way-randv e (velocity e)))
-		      ((:move1 :stop2 (move-timer e))
-		       (stop-enemy e))
-		      ((:stop2 :move2 (stop-timer e))
-		       (set-4way-randv e (velocity e)))
-		      ((:move2 :shot (move-timer e))
-		       (stop-enemy e))
-		      ;;tsurai
-		      ((:shot :stop1 (shot-timer e))
-		       (set-bullet e 'tenemy2-bullet 
-				   (bullet-v e) 0 game)
-		       (set-bullet e 'tenemy2-bullet 
-				   0 (bullet-v e) game)
-		       (set-bullet e 'tenemy2-bullet 
-				   (- (bullet-v e)) 0 game)
-		       (set-bullet e 'tenemy2-bullet 
-				   0 (- (bullet-v e)) game))))
+	(call-next-method)
+	(change-enemy-state e
+		((:stop1 :move1 (stop-timer e))
+		 (set-4way-randv e (velocity e)))
+		((:move1 :stop2 (move-timer e))
+		 (stop-enemy e))
+		((:stop2 :move2 (stop-timer e))
+		 (set-4way-randv e (velocity e)))
+		((:move2 :shot (move-timer e))
+		 (stop-enemy e))
+		((:shot :stop1 (shot-timer e))
+		 (set-bullet e 'tenemy2-bullet 
+			     (bullet-v e) 0 game)
+		 (set-bullet e 'tenemy2-bullet 
+			     0 (bullet-v e) game)
+		 (set-bullet e 'tenemy2-bullet 
+			     (- (bullet-v e)) 0 game)
+		 (set-bullet e 'tenemy2-bullet 
+			     0 (- (bullet-v e)) game))))
 
+
+;///test enemy react///
+(define-class test-enemy-react (enemy)
+	(image (get-image :test-enemy))
+	(state :stop)
+	(player-found-p nil)
+	(react-dist 150)
+	(move-timer (make-timer 60))
+	(stop-timer (make-timer 60))
+	(velocity 0.5))
+
+(defmethod update ((e test-enemy-react) (game game))
+	(call-next-method)
+	(when (not (player-found-p e))
+	  (change-enemy-state e
+		  ((:stop :move (stop-timer e))
+		   (set-4way-randv e (velocity e)))
+		  ((:move :stop (move-timer e))
+		   (stop-enemy e)))))

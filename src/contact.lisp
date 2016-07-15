@@ -97,6 +97,20 @@
 		    (when (collidep player bullet)
 		      (damage bullet player)))
 
+
 (definteract-method interact-update (weapon player-attack) (enemy enemy)
 		    (when (collidep weapon enemy)
 		      (damage weapon enemy)))
+
+(definteract-method interact-update (player player) (enemy test-enemy-react)
+  (call-next-method)
+  (whens ((and (not (player-found-p enemy))
+	       (< (distance player enemy #'point-x #'point-y)
+		  (react-dist enemy)))
+	  (setf (player-found-p enemy) t))
+	 ((player-found-p enemy)
+	  (let ((dir (dir-univec (point-x enemy) (point-y enemy)
+				 (point-x player) (point-y player))))
+	    (setf (vx enemy) (* (first dir) (velocity enemy))
+		  (vy enemy) (* (second dir) (velocity enemy)))))))
+
