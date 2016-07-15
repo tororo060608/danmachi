@@ -40,6 +40,6 @@
   (add-object (make-instance 'player-attack
 			     :vx 0
 			     :vy 0
-			     :point-x (point-x obj)
-			     :point-y (+ (point-y obj) (height obj)))
+			     :point-x (point-x p)
+			     :point-y (+ (point-y p) (height p)))
 	      game))
