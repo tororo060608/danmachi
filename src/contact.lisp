@@ -85,15 +85,18 @@
 
 
 (definteract-method interact-update (character gamecharacter) (wall game-wall)
-  (when (collidep character wall)
-    (divide-half character wall (vx character) (vy character))))
+		    (when (collidep character wall)
+		      (divide-half character wall (vx character) (vy character))))
 
 (definteract-method interact-update (player player) (enemy enemy)
-  (when (collidep player enemy)
-		(attack enemy player)
-    (divide-half player enemy (vx player) (vy player))))
+		    (when (collidep player enemy)
+		      (damage enemy player)
+		      (divide-half player enemy (vx player) (vy player))))
 
 (definteract-method interact-update (player player) (bullet enemy-bullet)
-  (when (collidep player bullet)
-		(attack bullet player)))
+		    (when (collidep player bullet)
+		      (damage bullet player)))
 
+(definteract-method interact-update (weapon player-attack) (enemy enemy)
+		    (when (collidep weapon enemy)
+		      (damage weapon enemy)))

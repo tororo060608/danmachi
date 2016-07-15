@@ -48,9 +48,15 @@
 ;draw object
 (defgeneric draw (obj game))
 (defmethod draw ((object gameobject) (game game))
-    (sdl:draw-surface-at-* (image object)
-			   (round (point-x object))
-			   (round (point-y object))))
+  (if (image object)
+      (sdl:draw-surface-at-* (image object)
+			     (round (point-x object))
+			     (round (point-y object)))
+      (sdl:draw-box-* (round (point-x object))
+		      (round (point-y object))
+		      (width object)
+		      (height object)
+		      :color sdl:*blue*)))
 
 (defmethod update ((object gameobject) (game game))
 	(incf (point-x object) (vx object))
@@ -64,7 +70,7 @@
 				 (top (- margin))
 				 (bottom (+ (window-height game) margin)))
 		(not (and (<= left (point-x object) right)
-							(<= top (point-y object) bottom)))))
+			  (<= top (point-y object) bottom)))))
 
 ;;wall object
 (define-class game-wall (gameobject)
@@ -82,6 +88,6 @@
 (define-class bullet (gameobject))
 
 (defmethod update ((b bullet) (game game))
-	(call-next-method)
-	(when (out-of-gamearea-p b game)
-		(kill b)))
+  (call-next-method)
+  (when (out-of-gamearea-p b game)
+    (kill b)))

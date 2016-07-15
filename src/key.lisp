@@ -4,4 +4,5 @@
     (right :sdl-key-right)
     (left  :sdl-key-left)
     (up    :sdl-key-up)
-    (down  :sdl-key-down))
+    (down  :sdl-key-down)
+    (z     :sdl-key-z))

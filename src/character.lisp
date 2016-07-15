@@ -22,7 +22,7 @@
   (when (out-of-gamearea-p chr game)
     (kill chr)))
 
-(defmethod attack ((obj gameobject) (char gamecharacter))
+(defmethod damage ((obj gameobject) (char gamecharacter))
   (when (not (muteki char))
     (decf (hp char) (atk obj))
     (setf (muteki char) t
