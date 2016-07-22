@@ -7,6 +7,16 @@
   (height 32)
   (image (get-image :player)))
 
+(defmethod add-object ((p player) (game game))
+  (if (player game)
+      (with-accessors ((x point-x) (y point-y)) (player game)
+	(setf x (point-x p)
+	      y (point-y p))
+	(pushnew (player game) (object-list game)))
+      (progn
+	(setf (player game) p)
+	(call-next-method))))
+
 (defmethod update ((p player) (game game))
   (with-accessors ((vx vx) (vy vy) (x point-x) (y point-y)
 		   (speed player-speed)) p
