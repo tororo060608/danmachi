@@ -3,9 +3,9 @@
 ;;player object
 (define-class player (gamecharacter)
   (player-speed 5)
-  (width 32)
-  (height 32)
-  (image (get-image :player)))
+  (width 64)
+  (height 64)
+  (image (get-image :player_front)))
 
 (defmethod add-object ((p player) (game game))
   (if (player game)
@@ -34,6 +34,9 @@
       (setf vx (/ vx (sqrt 2))
 	    vy (/ vy (sqrt 2)))))
   (call-next-method))
+
+(defmethod attack ((p player) (game game))
+  (add-object (make-instance 'player-attack) game))
 
 (define-class player-attack (bullet)
   (width 16)
