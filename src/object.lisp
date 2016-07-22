@@ -3,8 +3,12 @@
 (define-class game ()
   (window-width 640)
   (window-height 480)
+  (map-width 0)
+  (map-height 0)
   object-list
   floor-list
+  player
+  (camera (list 0 0))
   (keystate (make-instance 'keystate)))
 
 (defgeneric add-object (obj game))
@@ -43,10 +47,18 @@
 (defmethod draw ((object gameobject) (game game))
   (if (image object)
       (sdl:draw-surface-at-* (image object)
-			     (round (point-x object))
-			     (round (point-y object)))
-      (sdl:draw-box-* (round (point-x object))
-		      (round (point-y object))
+			     (round (x-in-camera
+				     (point-x object)
+				     game))
+			     (round (y-in-camera
+				     (point-y object)
+				     game)))
+      (sdl:draw-box-* (round (x-in-camera
+			      (point-x object)
+			      game))
+		      (round (y-in-camera
+			      (point-y object)
+			      game))
 		      (width object)
 		      (height object)
 		      :color sdl:*blue*)))
@@ -57,13 +69,17 @@
 
 ;out-gamearea detect
 (defun out-of-gamearea-p (object game)
-	(let* ((margin 50)
-				 (left (- margin))
-				 (right (+ (window-width game) margin))
-				 (top (- margin))
-				 (bottom (+ (window-height game) margin)))
-		(not (and (<= left (point-x object) right)
-			  (<= top (point-y object) bottom)))))
+  (let* ((margin 50)
+	 (left (- margin))
+	 (right (+ (window-width game) margin))
+	 (top (- margin))
+	 (bottom (+ (window-height game) margin)))
+    (not (and (<= left 
+		  (x-in-camera (point-x object) game)
+		  right)
+	      (<= top 
+		  (y-in-camera (point-y object) game)
+		  bottom)))))
 
 ;;wall object
 (define-class game-wall (gameobject)

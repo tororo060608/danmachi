@@ -1,0 +1,36 @@
+(:size (30 30)
+ :table (p (player game-floor)
+	 w game-wall
+	 space game-floor
+	 a (test-enemy-react game-floor)))
+w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
+w                                                         w
+w                                                         w
+w       p                                                 w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w                                                         w
+w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
+

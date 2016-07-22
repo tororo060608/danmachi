@@ -20,7 +20,7 @@
       (create-wall wall-list game)
       (create-floor floor-list game)
 |#
-      (load-map "test.map" game)
+      (load-map "large.map" game)
 
       ;;event
       (sdl:with-events()
@@ -35,6 +35,11 @@
 	       (sdl:clear-display sdl:*black*)
 	       (update-game game)
 	       (round-robin #'interact-update (object-list game))
+	       (update-camera game)
 	       (draw-game game)
 	       (sdl:update-display)
+	       (print (camera game))
+	       (format t "player x : ~a, y : ~a~%"
+		       (point-x (player game))
+		       (point-y (player game)))
 	       (next-key-state (keystate game)))))))
