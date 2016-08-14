@@ -8,8 +8,29 @@
   object-list
   floor-list
   player
+  state-stack
   (camera (list 0 0))
   (keystate (make-instance 'keystate)))
+
+(defun push-state (state-sym game)
+  (push state-sym (state-stack game))
+  (format t "pushed stack:~a~%" (state-stack game)))
+
+(defun pop-state (game)
+  (pop (state-stack game))
+  (format t "poped stack:~a~%" (state-stack game)))
+
+(defun run-state (game)
+  (if (null (state-stack game))
+      (error "state-stack is empty")
+      (let* ((state-sym (car (state-stack game)))
+	     (state-func
+	      (case state-sym
+		(:title #'title-state)
+		(:game #'gaming-state))))
+	(if (null state-func)
+	    (error "undefined state")
+	    (funcall state-func game)))))
 
 (defgeneric add-object (obj game))
 
