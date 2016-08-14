@@ -2,7 +2,7 @@
  :table (p (player game-floor)
 	 w game-wall
 	 space game-floor
-	 a (test-enemy-react game-floor)))
+	 a (test-enemy game-floor)))
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
 w                                                         w
 w                                                         w
@@ -10,7 +10,7 @@ w       p                                                 w
 w                                                         w
 w                                                         w
 w                                                         w
-w                                                         w
+w                                     a                   w
 w                                                         w
 w                                                         w
 w                                                         w

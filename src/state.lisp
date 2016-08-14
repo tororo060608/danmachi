@@ -11,12 +11,12 @@
       (when (key-down-p c)
 	(push-state :menu-index game)))
   (draw-game game)
-  #|
+#|
   (print (camera game))
   (format t "player x : ~a, y : ~a~%"
 	  (point-x (player game))
 	  (point-y (player game)))
-  |#
+|#
   )
 
 (defun title-state (game)

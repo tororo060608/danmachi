@@ -4,7 +4,7 @@
 (define-class enemy (gamecharacter)
   (width 32)
   (height 32)
-  (atk 50))
+  (atk 10))
 
 ;enemy bullet base class
 (define-class enemy-bullet (bullet)

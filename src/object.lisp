@@ -13,12 +13,10 @@
   (keystate (make-instance 'keystate)))
 
 (defun push-state (state-sym game)
-  (push state-sym (state-stack game))
-  (format t "pushed stack:~a~%" (state-stack game)))
+  (push state-sym (state-stack game)))
 
 (defun pop-state (game)
-  (pop (state-stack game))
-  (format t "poped stack:~a~%" (state-stack game)))
+  (pop (state-stack game)))
 
 (defun run-state (game)
   (if (null (state-stack game))

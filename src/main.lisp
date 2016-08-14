@@ -22,7 +22,6 @@
 	(:key-up-event (:key key)
 		       (update-key-state key 2 (keystate game)))
 	(:idle ()
-	       (sdl:clear-display sdl:*black*)
 	       (run-state game)
 	       (sdl:update-display)
 	       (next-key-state (keystate game)))))))
