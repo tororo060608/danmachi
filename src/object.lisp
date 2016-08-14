@@ -27,7 +27,10 @@
 	     (state-func
 	      (case state-sym
 		(:title #'title-state)
-		(:game #'gaming-state))))
+		(:game #'gaming-state)
+		(:menu-index #'menu-index-state)
+		(:select-equip #'select-equip-state)
+		(:item-table #'item-table-state))))
 	(if (null state-func)
 	    (error "undefined state")
 	    (funcall state-func game)))))
