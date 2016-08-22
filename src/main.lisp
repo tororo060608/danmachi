@@ -9,9 +9,8 @@
       (sdl:initialise-default-font  sdl:*font-9x18b*)
       (setf (sdl:frame-rate) 60)
       (gameimage-load)
-      (load-map "large.map" game)
-      (push-state :title
-		  game)
+      (load-state-func)
+      (push-state :title game)
       ;;event
       (sdl:with-events()
 	(:quit-event () t)
