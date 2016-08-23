@@ -1,26 +1,5 @@
 (in-package :danmachi)
 
-;;begin stack operation;;
-
-(defun push-state (state-node game)
-  (push (if (listp state-node)
-	    state-node
-	    (list state-node))
-	(state-stack game)))
-
-;;状態ノードを塊でpush
-;;(push-stateset '(a b) (c))
-;; => (a b c)
-(defun push-stateset (node-list game)
-  (mapc (lambda (node) (push-state node game))
-	(reverse node-list)))
-
-(defun pop-state (game)
-  (pop (state-stack game)))
-
-;;end stack operation;;
-
-
 (defmacro set-nil (&rest objs)
   `(progn
      ,@(mapcar (lambda (x) `(setf ,x nil))

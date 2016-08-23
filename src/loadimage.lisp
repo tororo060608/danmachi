@@ -15,4 +15,5 @@
 		   :test-bullet "test_bullet.png"
 		   :wall "wall.png"
 		   :floor "floor.png"
-		   ))
+		   :upstairs "upstairs.png"
+		   :downstairs "downstairs.png"))

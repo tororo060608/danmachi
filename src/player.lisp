@@ -5,6 +5,7 @@
   (player-speed 5)
   (width 64)
   (height 64)
+  move-floor  ;kari
   (image (get-image :player_front)))
 
 (defmethod add-object ((p player) (game game))
@@ -19,7 +20,7 @@
 
 (defmethod update ((p player) (game game))
   (with-accessors ((vx vx) (vy vy) (x point-x) (y point-y)
-		   (speed player-speed)) p
+		   (speed player-speed) (move-floor move-floor)) p
     (with-slots (up down right left z) (keystate game)
       (cond ((key-pressed-p right) (setf vx speed))
 	    ((key-pressed-p left)  (setf vx (- speed)))
@@ -32,8 +33,16 @@
     ;; slanting move
     (when (and (/= vx 0) (/= vy 0))
       (setf vx (/ vx (sqrt 2))
-	    vy (/ vy (sqrt 2)))))
-  (call-next-method))
+	    vy (/ vy (sqrt 2))))
+   ;;kari
+    (when move-floor
+      (push-state
+       (case move-floor
+	 (:up '(:init-map "large.map"))
+	 (:down '(:init-map "large2.map"))) game)
+      (setf move-floor nil))
+    ;;
+  (call-next-method)))
 
 (defmethod attack ((p player) (game game))
   (add-object (make-instance 'player-attack) game))

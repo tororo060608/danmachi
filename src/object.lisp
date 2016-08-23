@@ -9,8 +9,25 @@
   floor-list
   player
   state-stack
+  (map-id 0)
   (camera (list 0 0))
   (keystate (make-instance 'keystate)))
+
+(defun push-state (state-node game)
+  (push (if (listp state-node)
+	    state-node
+	    (list state-node))
+	(state-stack game)))
+
+;;状態ノードを塊でpush
+;;(push-stateset '(a b) (c))
+;; => (a b c)
+(defun push-stateset (node-list game)
+  (mapc (lambda (node) (push-state node game))
+	(reverse node-list)))
+
+(defun pop-state (game)
+  (pop (state-stack game)))
 
 (defgeneric add-object (obj game))
 
@@ -96,6 +113,17 @@
 
 (defmethod add-object ((floor game-floor) (game game))
   (push floor (floor-list game)))
+
+(define-class effect-floor (game-floor))
+
+(define-class upstairs (effect-floor)
+  (image (get-image :upstairs)))
+
+(define-class downstairs (effect-floor)
+  (image (get-image :downstairs)))
+
+(defmethod add-object ((floor effect-floor) (game game))
+  (push floor (object-list game)))
 
 ;bullet base class
 (define-class bullet (gameobject))
