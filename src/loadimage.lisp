@@ -16,4 +16,14 @@
 		   :wall "wall.png"
 		   :floor "floor.png"
 		   :upstairs "upstairs.png"
-		   :downstairs "downstairs.png"))
+		   :downstairs "downstairs.png"
+		   :sword-front1 "sword-front1.png"
+		   :sword-front2 "sword-front2.png"
+		   :sword-back1 "sword-back1.png"
+		   :sword-back2 "sword-back2.png"
+		   :sword-right1 "sword-right1.png"
+		   :sword-right2 "sword-right2.png"
+		   :sword-left1 "sword-left1.png"
+		   :sword-left2 "sword-left2.png"
+		   ))
+
