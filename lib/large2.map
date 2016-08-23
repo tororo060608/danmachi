@@ -3,7 +3,7 @@
 	 w game-wall
 	 space game-floor
 	 a (test-enemy game-floor)
-	 d downstairs))
+	 u upstairs))
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
 w                                                         w
 w                                                         w
@@ -15,7 +15,7 @@ w                                     a                   w
 w                                                         w
 w                                                         w
 w                                                         w
-w             d                                           w
+w             u                                           w
 w                                                         w
 w                                                         w
 w                                                         w

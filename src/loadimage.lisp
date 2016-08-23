@@ -15,6 +15,8 @@
 		   :test-bullet "test_bullet.png"
 		   :wall "wall.png"
 		   :floor "floor.png"
+		   :upstairs "upstairs.png"
+		   :downstairs "downstairs.png"
 		   :sword-front1 "sword-front1.png"
 		   :sword-front2 "sword-front2.png"
 		   :sword-back1 "sword-back1.png"

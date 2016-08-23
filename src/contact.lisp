@@ -114,3 +114,13 @@
 	    (setf (vx enemy) (* (first dir) (velocity enemy))
 		  (vy enemy) (* (second dir) (velocity enemy)))))))
 
+
+;;game持たないと限界
+(definteract-method interact-update (player player) (upstairs upstairs)
+  (when (collidep player upstairs)
+    (setf (move-floor player) :up)))
+
+(definteract-method interact-update (player player) (downstairs downstairs)
+  (when (collidep player downstairs)
+    (setf (move-floor player) :down)))
+

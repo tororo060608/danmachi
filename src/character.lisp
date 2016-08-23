@@ -3,8 +3,7 @@
 (define-class gamecharacter (gameobject)
   (hp 100)
   (muteki nil)
-  (muteki-count 0)
-  (muteki-time 10)
+  (muteki-timer (make-timer 10))
   (direction 'front))
 
 (defmethod alive-detect ((char gamecharacter) game)
@@ -12,9 +11,8 @@
     (kill char)))
 
 (defmethod dec-muteki-frame ((chr gamecharacter))
-  (if (and (muteki chr) (zerop  (muteki-count chr)))
-      (setf (muteki chr) nil)
-      (decf (muteki-count chr))))
+  (when (and (muteki chr) (funcall (muteki-timer chr)))
+    (setf (muteki chr) nil)))
 
 (defmethod update ((chr gamecharacter) game)
   (call-next-method)
@@ -29,8 +27,7 @@
 (defmethod damage ((obj gameobject) (char gamecharacter))
   (when (not (muteki char))
     (decf (hp char) (atk obj))
-    (setf (muteki char) t
-	  (muteki-count char) (muteki-time char))))
+    (setf (muteki char) t)))
 
 (defmethod change-direction ((char gamecharacter) game)
   (when (direction-change-p char)

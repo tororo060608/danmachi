@@ -5,6 +5,7 @@
   (player-speed 5)
   (width 32)
   (height 64)
+  move-floor  ;kari
   (player-state nil)
   (atk-stuck (make-timer 10))
   (atk-time-limit (make-timer 10))
@@ -38,12 +39,19 @@
 		     ((key-pressed-p down) (setf vy speed))
 		     (t (setf vy 0)))
 	       (cond ((key-down-p z) (atk-start p game))))
-	
+	     
 	     ;; slanting move
 	     (when (and (/= vx 0) (/= vy 0))
 	       (setf vx (/ vx (sqrt 2))
 		     vy (/ vy (sqrt 2)))))))
-	   
+  ;;kari
+  (when move-floor
+    (push-state
+     (case move-floor
+       (:up '(:init-map "large.map"))
+       (:down '(:init-map "large2.map"))) game)
+    (setf move-floor nil))
+  ;;
   (call-next-method))
   
 (defmethod attack ((p player) (game game))

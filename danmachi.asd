@@ -22,6 +22,7 @@
 		 (:file "camera")
 		 (:file "create")
 		 (:file "contact")
+		 (:file "state")
 		 (:file "main"))))
   :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 
