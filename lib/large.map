@@ -3,9 +3,12 @@
 	 w game-wall
 	 space game-floor
 	 a (test-enemy game-floor)
-	 d downstairs))
+	 d downstairs
+	 t (animation-test game-floor)
+	 c (animation-test2 game-floor)))
+
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
-w                                                         w
+w   t c                                                   w
 w                                                         w
 w       p                                                 w
 w                                                         w

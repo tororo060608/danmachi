@@ -60,8 +60,32 @@
 (defmethod add-object ((obj gameobject) (game game))
   (push obj (object-list game)))
 
-;draw object
+(defgeneric draw-image (obj point-x point-y game))
+(defmethod draw-image ((s sdl:surface) point-x point-y game)
+  (sdl:draw-surface-at-* s
+			 (round (x-in-camera
+				 point-x game))
+			 (round (y-in-camera
+				 point-y game))))
+
+(defmethod draw-image ((a animation) point-x point-y game)
+  (with-slots (src frame-timer frame-length now-frame) a
+    (sdl:draw-surface-at-* src
+			   (round (x-in-camera
+				   point-x game))
+			   (round (y-in-camera
+				   point-y game))
+			   :cell now-frame)
+    (when (funcall frame-timer)
+      (setf now-frame (mod (1+ now-frame) frame-length)))))
+
+
+
+;;draw object
+
 (defgeneric draw (obj game))
+
+#|
 (defmethod draw ((object gameobject) (game game))
   (if (image object)
       (sdl:draw-surface-at-* (image object)
@@ -80,6 +104,24 @@
 		      (width object)
 		      (height object)
 		      :color sdl:*blue*)))
+|#
+
+(defmethod draw ((object gameobject) (game game))
+  (if (image object)
+      (draw-image (image object)
+		  (point-x object)
+		  (point-y object)
+		  game)
+      (sdl:draw-box-* (round (x-in-camera
+			      (point-x object)
+			      game))
+		      (round (y-in-camera
+			      (point-y object)
+			      game))
+		      (width object)
+		      (height object)
+		      :color sdl:*blue*)))
+
 
 (defmethod update ((object gameobject) (game game))
 	(incf (point-x object) (vx object))
@@ -132,3 +174,15 @@
   (call-next-method)
   (when (out-of-gamearea-p b game)
     (kill b)))
+
+;;animation-test
+(define-class animation-test (gameobject)
+  (width 24)
+  (height 24)
+  (image (get-animation :test)))
+
+(define-class animation-test2 (gameobject)
+  (width 32)
+  (height 32)
+  (image (get-animation :test2)))
+
