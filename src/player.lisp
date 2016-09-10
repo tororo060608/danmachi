@@ -9,7 +9,12 @@
   (player-state nil)
   (atk-stuck (make-timer 10))
   (atk-time-limit (make-timer 10))
-  (image (get-image :player_front)))
+  (image (get-image :player_front))
+  mp
+  atk
+  df
+  money
+  level)
 
 (defmethod add-object ((p player) (game game))
   (if (player game)
