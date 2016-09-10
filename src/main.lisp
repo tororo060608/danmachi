@@ -9,6 +9,7 @@
       (sdl:initialise-default-font  sdl:*font-9x18b*)
       (setf (sdl:frame-rate) 60)
       (gameimage-load)
+      (gameanimation-load)
       (load-state-func)
       (push-state :title game)
       ;;event

@@ -13,6 +13,7 @@
 	   DEFINE-CLASS 
 	   WHENS 
 	   DEFINTERACT-METHOD
+	   collide
 	   DEFCOLLIDE 
 	   PMIF 
 	   ALAMBDA 
