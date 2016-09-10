@@ -21,7 +21,9 @@
 (defun gaming-state (game)
   (sdl:clear-display sdl:*black*)
   (update-game game)
-  (round-robin #'interact-update (object-list game))
+  (round-robin (lambda (obj1 obj2)
+		 (collide obj1 obj2 game))
+	       (object-list game))
   (update-camera game)
   ;;つらい playerが持つべき?
   (with-slots (c)

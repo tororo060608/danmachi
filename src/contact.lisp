@@ -42,7 +42,7 @@
 
 (defun divide-half (obj1 obj2 vx vy 
 		    &optional (i 5) (pos (list (- (point-x obj1) vx)
-																	 (- (point-y obj1) vy))))
+					       (- (point-y obj1) vy))))
   (setf (point-x obj1) (- (point-x obj1) (/ vx 2)))
   (setf (point-y obj1) (- (point-y obj1) (/ vy 2)))
   (if (collidep obj1 obj2)
@@ -78,31 +78,27 @@
 |#  
  
 
-(defgeneric interact-update (obj1 obj2))
-(definteract-method interact-update 
-    (obj1 gameobject) 
-    (obj2 gameobject))
+(defcollide (obj1 gameobject) (obj2 gameobject))
+
+(defcollide (character gamecharacter) (wall game-wall)
+  (when (collidep character wall)
+    (divide-half character wall (vx character) (vy character))))
+
+(defcollide (player player) (enemy enemy)
+  (when (collidep player enemy)
+    (damage enemy player)
+    (divide-half player enemy (vx player) (vy player))))
+
+(defcollide (player player) (bullet enemy-bullet)
+  (when (collidep player bullet)
+    (damage bullet player)))
 
 
-(definteract-method interact-update (character gamecharacter) (wall game-wall)
-		    (when (collidep character wall)
-		      (divide-half character wall (vx character) (vy character))))
+(defcollide (weapon player-attack) (enemy enemy)
+  (when (collidep weapon enemy)
+    (damage weapon enemy)))
 
-(definteract-method interact-update (player player) (enemy enemy)
-		    (when (collidep player enemy)
-		      (damage enemy player)
-		      (divide-half player enemy (vx player) (vy player))))
-
-(definteract-method interact-update (player player) (bullet enemy-bullet)
-		    (when (collidep player bullet)
-		      (damage bullet player)))
-
-
-(definteract-method interact-update (weapon player-attack) (enemy enemy)
-		    (when (collidep weapon enemy)
-		      (damage weapon enemy)))
-
-(definteract-method interact-update (player player) (enemy test-enemy-react)
+(defcollide (player player) (enemy test-enemy-react)
   (call-next-method)
   (whens ((and (not (player-found-p enemy))
 	       (< (distance player enemy #'point-x #'point-y)
@@ -114,13 +110,11 @@
 	    (setf (vx enemy) (* (first dir) (velocity enemy))
 		  (vy enemy) (* (second dir) (velocity enemy)))))))
 
-
-;;game持たないと限界
-(definteract-method interact-update (player player) (upstairs upstairs)
+(defcollide (player player) (upstairs upstairs)
   (when (collidep player upstairs)
     (setf (move-floor player) :up)))
 
-(definteract-method interact-update (player player) (downstairs downstairs)
+(defcollide (player player) (downstairs downstairs)
   (when (collidep player downstairs)
     (setf (move-floor player) :down)))
 
