@@ -1,6 +1,3 @@
-(require :lispbuilder-sdl)
-(require :lispbuilder-sdl-ttf)
-
 (in-package #:lispbuilder-sdl)
 
 (defmethod _render-string-solid_ ((string string) (font ttf-font) (color color) free cache)

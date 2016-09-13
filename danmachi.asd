@@ -28,6 +28,6 @@
 		 (:file "state")
 		 (:file "font")
 		 (:file "main"))))
-  :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
+  :depends-on (:lispbuilder-sdl :lispbuilder-sdl-ttf :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 
 
