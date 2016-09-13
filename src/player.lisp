@@ -11,10 +11,13 @@
   (atk-time-limit (make-timer 10))
   (image (get-image :player_front))
   mp
+  atk-default
+  df-default
   atk
   df
   money
-  level)
+  level
+  item-list)
 
 (defmethod add-object ((p player) (game game))
   (if (player game)

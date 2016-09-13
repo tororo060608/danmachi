@@ -19,6 +19,8 @@
 		 (:file "character")
 		 (:file "player")
 		 (:file "enemy")
+		 (:file "item")
+		 (:file "itemlist")
 		 (:file "camera")
 		 (:file "create")
 		 (:file "contact")
