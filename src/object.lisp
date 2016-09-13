@@ -85,38 +85,23 @@
 
 (defgeneric draw (obj game))
 
-#|
-(defmethod draw ((object gameobject) (game game))
-  (if (image object)
-      (sdl:draw-surface-at-* (image object)
-			     (round (x-in-camera
-				     (point-x object)
-				     game))
-			     (round (y-in-camera
-				     (point-y object)
-				     game)))
-      (sdl:draw-box-* (round (x-in-camera
-			      (point-x object)
-			      game))
-		      (round (y-in-camera
-			      (point-y object)
-			      game))
-		      (width object)
-		      (height object)
-		      :color sdl:*blue*)))
-|#
+(defun draw-x (obj)
+  (- (point-x obj) (ash (width obj) -1)))
+
+(defun draw-y (obj)
+  (- (point-y obj) (ash (height obj) -1)))
 
 (defmethod draw ((object gameobject) (game game))
   (if (image object)
       (draw-image (image object)
-		  (point-x object)
-		  (point-y object)
+		  (draw-x object)
+		  (draw-y object)
 		  game)
       (sdl:draw-box-* (round (x-in-camera
-			      (point-x object)
+			      (draw-x object)
 			      game))
 		      (round (y-in-camera
-			      (point-y object)
+			      (draw-y object)
 			      game))
 		      (width object)
 		      (height object)
@@ -124,8 +109,8 @@
 
 
 (defmethod update ((object gameobject) (game game))
-	(incf (point-x object) (vx object))
-	(incf	(point-y object) (vy object)))
+  (incf (point-x object) (vx object))
+  (incf	(point-y object) (vy object)))
 
 ;out-gamearea detect
 (defun out-of-gamearea-p (object game)
@@ -152,7 +137,13 @@
   (width 32)
   (height 32)
   (image (get-image :floor)))
-
+#|
+(defmethod draw ((obj game-wall) game)
+  (call-next-method)
+  (sdl:draw-box-* (round (x-in-camera (point-x obj) game))
+		  (round (y-in-camera (point-y obj) game)) 4 4
+		  :color sdl:*red*))
+|#
 (defmethod add-object ((floor game-floor) (game game))
   (push floor (floor-list game)))
 

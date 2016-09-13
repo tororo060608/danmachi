@@ -25,7 +25,13 @@
       (progn
 	(setf (player game) p)
 	(call-next-method))))
-
+#|
+(defmethod draw ((obj player) game)
+  (call-next-method)
+  (sdl:draw-box-* (round (x-in-camera (point-x obj) game))
+		  (round (y-in-camera (point-y obj) game)) 4 4
+		  :color sdl:*red*))
+|#
 (defmethod update ((p player) (game game))
   (cond ((eq (player-state p) 'atk-s) (when (funcall (atk-stuck p))
 					(attack p game)

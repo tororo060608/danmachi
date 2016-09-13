@@ -1,12 +1,14 @@
 (in-package danmachi)
 
+(defvar *block-size* 32)
+
 (defun load-map (map game)
   (with-open-file (s (lib-path map))
     (let* ((config (read s))
 	   (size (getf config :size))
 	   (table (load-table config)))
-      (setf (map-width game) (* 32 (first size))
-	    (map-height game) ( * 32 (second size)))
+      (setf (map-width game) (* *block-size* (first size))
+	    (map-height game) ( * *block-size* (second size)))
       (dotimes (y (second size) game)
 	(let ((line (take-nth 2 (read-line s))))
 	  (iter (for x to (first size))
@@ -15,8 +17,8 @@
 	      (mapc (lambda (obj)
 		      ((lambda (o) (add-object o game))
 		       (make-instance obj
-				      :point-x (* 32 x)
-				      :point-y (* 32 y))))
+				      :point-x (+ (ash *block-size* -1) (* *block-size* x))
+				      :point-y (+ (ash *block-size* -1) (* *block-size* y)))))
 		    (ensure-list objs)))))))))
 
 (defun take-nth (n seq)

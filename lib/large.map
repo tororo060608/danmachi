@@ -6,14 +6,13 @@
 	 d downstairs
 	 t (animation-test game-floor)
 	 c (animation-test2 game-floor)))
-
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
 w   t c                                                   w
 w                                                         w
-w       p                                                 w
 w                                                         w
 w                                                         w
 w                                                         w
+w           w                                             w
 w                                     a                   w
 w                                                         w
 w                                                         w
@@ -29,12 +28,11 @@ w                                                         w
 w                                                         w
 w                                                         w
 w                                                         w
+w   p                                                     w
 w                                                         w
 w                                                         w
 w                                                         w
 w                                                         w
 w                                                         w
-w                                                         w
-w                                                         w
+w   t                                                     w
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
-

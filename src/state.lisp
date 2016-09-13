@@ -20,11 +20,11 @@
 
 (defun gaming-state (game)
   (sdl:clear-display sdl:*black*)
+  (update-camera game)  
   (update-game game)
   (round-robin (lambda (obj1 obj2)
 		 (collide obj1 obj2 game))
 	       (object-list game))
-  (update-camera game)
   ;;つらい playerが持つべき?
   (with-slots (c)
       (keystate game)
@@ -34,12 +34,6 @@
     (pop-state game)
     (push-state :gameover game))
   (draw-game game)
-#|
-  (print (camera game))
-  (format t "player x : ~a, y : ~a~%"
-	  (point-x (player game))
-	  (point-y (player game)))
-|#
   )
 
 (defun title-state (game)
