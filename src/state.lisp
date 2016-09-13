@@ -1,10 +1,5 @@
 (in-package :danmachi)
 
-(defmacro set-nil (&rest objs)
-  `(progn
-     ,@(mapcar (lambda (x) `(setf ,x nil))
-	      objs)))
-
 (defun init-game (game)
   (set-nil (object-list game)
 	   (floor-list game)
@@ -26,6 +21,7 @@
 	       (object-list game))
   (update-camera game)
   ;;つらい playerが持つべき?
+
   (with-slots (c)
       (keystate game)
       (when (key-down-p c)
@@ -46,7 +42,7 @@
   (with-slots (up down left right z)
       (keystate game)
     (sdl:clear-display sdl:*black*)
-    (sdl:draw-string-solid-* "this is title"
+    (sdl:draw-string-solid-* "楽しい人生"
 			     30 30)
     (when (key-down-p z)
       (pop-state game)
@@ -98,8 +94,7 @@
 	   (1 (push-state :item-table game))))))))
 
 (defun select-equip-state (game)
-  (with-slots (x)
-      (keystate game)
+  (with-slots (x) (keystate game)
     (sdl:clear-display sdl:*black*)
     (sdl:draw-string-solid-* "select equip"
 			     30 30)
@@ -107,12 +102,36 @@
       (pop-state game))))
 
 (defun item-table-state (game)
-    (with-slots (x)
-	(keystate game)
+    (with-slots (x) (keystate game)
       (sdl:clear-display sdl:*black*)
       (sdl:draw-string-solid-* "item table"
 			       30 30)
       (when (key-down-p x)
+	(pop-state game))))
+
+(defun push-text-state (filename game)
+  (let ((lines nil)
+	(size nil))
+    (with-open-file (stream (lib-path filename))
+      (iter (for l in-stream stream using #'read-line)
+	    (push l lines)))
+    (setf lines (reverse lines)
+	  size (length lines))
+    (push-stateset (loop for i below size by 4 collect
+			(list :display-text
+			      (loop for j
+				 below (min 4 (- size i))
+				 collect (nth (+ i j) lines))))
+		   game)))
+
+(defun display-text-state (strlist game)
+    (with-slots (z) (keystate game)
+      (sdl:draw-box-* 0 300 640 180
+		      :color sdl:*black*)
+      (loop for i below (length strlist) do
+	   (sdl:draw-string-solid-* (nth i strlist)
+				    20 (+ 320 (* i 40))))
+      (when (key-down-p z)
 	(pop-state game))))
 
 
@@ -127,7 +146,8 @@
 	   :game #'gaming-state
 	   :menu-index #'menu-index-state
 	   :select-equip #'select-equip-state
-	   :item-table #'item-table-state)))
+	   :item-table #'item-table-state
+	   :display-text #'display-text-state)))
 
 (defun run-state (game)
   (if (null (state-stack game))
@@ -139,3 +159,4 @@
 	(if (null state-func)
 	    (error "undefined state")
 	    (apply state-func (append state-arg (list game)))))))
+
