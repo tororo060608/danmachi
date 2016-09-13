@@ -20,8 +20,6 @@
 	(state-stack game)))
 
 ;;状態ノードを塊でpush
-;;(push-stateset '(a b) (c))
-;; => (a b c)
 (defun push-stateset (node-list game)
   (mapc (lambda (node) (push-state node game))
 	(reverse node-list)))
@@ -166,6 +164,13 @@
   (when (out-of-gamearea-p b game)
     (kill b)))
 
+;;npc
+(define-class npc (gameobject)
+  (width 32)
+  (height 32)
+  (image (get-animation :test2))
+  (textfile "mes_test.txt"))
+
 ;;animation-test
 (define-class animation-test (gameobject)
   (width 24)
@@ -176,4 +181,5 @@
   (width 32)
   (height 32)
   (image (get-animation :test2)))
+
 

@@ -19,6 +19,36 @@
 	     (b2 (+ y2 hh2)))
 	(and (< l1 r2) (< l2 r1) (< t1 b2) (< t2 b1))))))
 
+(defun around-p (obj1 obj2 dist)
+  (< (distance obj1 obj2 #'point-x #'point-y)
+     dist))
+
+(defun faced-p (player obj)
+  (let* ((dir (a-to-b-vector player obj
+			     #'point-x #'point-y))
+	 (vecx (first dir))
+	 (vecy (second dir)))
+    (case (direction player)
+      (back (and (> vecx vecy) (> (- vecx) vecy)))
+      (front (and (< vecx vecy) (< (- vecx) vecy)))
+      (left (and (< vecx vecy) (> (- vecx) vecy)))
+      (right (and (> vecx vecy) (< (- vecx) vecy))))))
+
+(defmacro defcollide (arg1 arg2 &body body)
+  (if (some (lambda (x) (eq (car body) x)) 
+	    '(:before :after :around))
+      `(progn
+	 (defmethod collide ,(car body) (,arg1 ,arg2 game)
+	   ,@(cdr body))
+	 (defmethod collide ,(car body) (,arg2 ,arg1 game)
+	   ,@(cdr body)))
+      `(progn
+	 (defmethod collide (,arg1 ,arg2 game)
+	   ,@body)
+	 (defmethod collide (,arg2 ,arg1 game)
+	   ,@body))))
+
+
 (defun divide-half (obj1 obj2 vx vy 
 		    &optional (i 5) (pos (list (- (point-x obj1) vx)
 					       (- (point-y obj1) vy))))
@@ -59,8 +89,7 @@
 (defcollide (player player) (enemy test-enemy-react)
   (call-next-method)
   (whens ((and (not (player-found-p enemy))
-	       (< (distance player enemy #'point-x #'point-y)
-		  (react-dist enemy)))
+	       (around-p player enemy(react-dist enemy)))
 	  (setf (player-found-p enemy) t))
 	 ((player-found-p enemy)
 	  (let ((dir (dir-univec (point-x enemy) (point-y enemy)
@@ -76,3 +105,11 @@
   (when (collidep player downstairs)
     (setf (move-floor player) :down)))
 
+(defparameter *npc-react-dist* 60)
+(defcollide (player player) (npc npc)
+  (with-slots (z) (keystate game)
+    (divide-half player npc (vx player) (vy player))
+    (when (and (around-p player npc *npc-react-dist*)
+	       (faced-p player npc)
+	       (key-down-p z))
+      (push-text-state (textfile npc) game))))

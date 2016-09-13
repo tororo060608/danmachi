@@ -27,21 +27,6 @@
      (defmethod ,method-name (,arg2 ,arg1)
        ,@body)))
 
-
-(defmacro defcollide (arg1 arg2 &body body)
-  (if (some (lambda (x) (eq (car body) x)) 
-	    '(:before :after :around))
-      `(progn
-	 (defmethod collide ,(car body) (,arg1 ,arg2 game)
-	   ,@(cdr body))
-	 (defmethod collide ,(car body) (,arg2 ,arg1 game)
-	   ,@(cdr body)))
-      `(progn
-	 (defmethod collide (,arg1 ,arg2 game)
-	   ,@body)
-	 (defmethod collide (,arg2 ,arg1 game)
-	   ,@body))))
-
 (defmacro pmif (test num)
   (with-gensyms (gnum)
     `(let ((,gnum ,num))

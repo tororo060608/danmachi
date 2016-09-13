@@ -6,7 +6,7 @@
       (sdl:window (window-width game)
 		  (window-height game)
 		  :title-caption "danmachi")
-      (sdl:initialise-default-font  sdl:*font-9x18b*)
+      (sdl:initialise-default-font  *ttf-font-misaki*)
       (setf (sdl:frame-rate) 60)
       (gameimage-load)
       (gameanimation-load)

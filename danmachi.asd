@@ -12,6 +12,7 @@
 		:serial t
 		:components
 		((:file "package")
+		 (:file "util")
 		 (:file "pathname")
 		 (:file "loadimage")
 		 (:file "key")
@@ -19,10 +20,13 @@
 		 (:file "character")
 		 (:file "player")
 		 (:file "enemy")
+		 (:file "item")
+		 (:file "itemlist")
 		 (:file "camera")
 		 (:file "create")
 		 (:file "contact")
 		 (:file "state")
+		 (:file "font")
 		 (:file "main"))))
   :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 
