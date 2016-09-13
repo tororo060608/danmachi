@@ -5,13 +5,14 @@
 	 a (test-enemy game-floor)
 	 d downstairs
 	 t (npc game-floor)))
+
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
 w   t                                                     w
 w                                                         w
-w       p                                                 w
 w                                                         w
 w                                                         w
 w                                                         w
+w           w                                             w
 w                                     a                   w
 w                                                         w
 w                                                         w
@@ -27,11 +28,11 @@ w                                                         w
 w                                                         w
 w                                                         w
 w                                                         w
+w   p                                                     w
 w                                                         w
 w                                                         w
 w                                                         w
 w                                                         w
 w                                                         w
-w                                                         w
-w                                                         w
+w   t                                                     w
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
