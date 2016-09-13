@@ -12,6 +12,7 @@
 		:serial t
 		:components
 		((:file "package")
+		 (:file "util")
 		 (:file "pathname")
 		 (:file "loadimage")
 		 (:file "key")
@@ -23,6 +24,7 @@
 		 (:file "create")
 		 (:file "contact")
 		 (:file "state")
+		 (:file "font")
 		 (:file "main"))))
   :depends-on (:lispbuilder-sdl :alexandria :closer-mop :split-sequence :iterate :sdlutils))
 

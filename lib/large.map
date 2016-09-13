@@ -4,11 +4,9 @@
 	 space game-floor
 	 a (test-enemy game-floor)
 	 d downstairs
-	 t (animation-test game-floor)
-	 c (animation-test2 game-floor)))
-
+	 t (npc game-floor)))
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
-w   t c                                                   w
+w   t                                                     w
 w                                                         w
 w       p                                                 w
 w                                                         w
@@ -37,4 +35,3 @@ w                                                         w
 w                                                         w
 w                                                         w
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w
-

@@ -19,11 +19,6 @@
 				      :point-y (* 32 y))))
 		    (ensure-list objs)))))))))
 
-(defun take-nth (n seq)
-  (do ((i 0 (+ i n))
-       (res nil (cons (elt seq i) res))
-       (len (length seq)))
-      ((<= len i) (nreverse res))))
 
 (defun load-map-size (config)
   (getf config :size))
