@@ -27,7 +27,9 @@
   (mapc #'(lambda (arg) (apply #'load-animation arg)) args))
 
 (defun get-image (indicator)
-  (getf *image-table* indicator))
+  (if-let (image (getf *image-table* indicator))
+    image
+    (progn (warn "Image ~a is not found." indicator))))
 
 (defun get-image-list (&rest keys)
   (mapcar #'get-image keys))

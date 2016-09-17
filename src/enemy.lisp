@@ -58,12 +58,12 @@
   (velocity 0.5))
 
 (defmethod update ((e test-enemy) (game game))
-	(call-next-method)
-	(change-enemy-state e
-			    ((:stop :move (stop-timer e))
-			     (set-4way-randv e (velocity e)))
-			    ((:move :stop (move-timer e))
-			     (stop-enemy e))))
+  (call-next-method)
+  (change-enemy-state e
+    ((:stop :move (stop-timer e))
+     (set-4way-randv e (velocity e)))
+    ((:move :stop (move-timer e))
+     (stop-enemy e))))
 
 ;///test enemy2///
 (define-class test-enemy2 (enemy)

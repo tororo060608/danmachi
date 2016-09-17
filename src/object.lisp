@@ -39,7 +39,22 @@
   width
   height
   (atk 0)
-  image)
+  (image nil))
+
+(defun set-size-by-image (obj)
+  (when (and (sdl:initialized-subsystems-p) (image obj))
+    (setf (width obj) (lispbuilder-sdl:width 
+		       (elt (lispbuilder-sdl:cells 
+			     (image obj)) 0))
+	  (height obj) (lispbuilder-sdl:height 
+			(elt (lispbuilder-sdl:cells 
+			      (image obj)) 0)))))
+
+(defmethod change-image (obj image))
+
+(defmethod change-image ((obj gameobject) (image sdl:surface))
+  (setf (image obj) image)
+  (set-size-by-image obj))
 
 (defun kill (obj)
   (setf (alive obj) nil))
@@ -160,9 +175,7 @@
 (define-class bullet (gameobject))
 
 (defmethod update ((b bullet) (game game))
-  (call-next-method)
-  (when (out-of-gamearea-p b game)
-    (kill b)))
+  (call-next-method))
 
 ;;npc
 (define-class npc (gameobject)
@@ -181,5 +194,3 @@
   (width 32)
   (height 32)
   (image (get-animation :test2)))
-
-

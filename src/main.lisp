@@ -24,4 +24,6 @@
 	(:idle ()
 	       (run-state game)
 	       (sdl:update-display)
-	       (next-key-state (keystate game)))))))
+	       (next-key-state (keystate game))
+	       ;(show-framerate)
+	       )))))
