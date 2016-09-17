@@ -10,14 +10,16 @@
   (atk-stuck (make-timer 10))
   (atk-time-limit (make-timer 10))
   (image (get-image :player_front))
-  mp
+  (mp 0)
   atk-default
   df-default
   atk
   df
   money
   level
-  item-list)
+  equip-list
+  adorn-list
+  (expend-list (list 'cider 10 'soad-pop 10)))
 
 (defmethod add-object ((p player) (game game))
   (if (player game)
@@ -45,14 +47,16 @@
 					(setf (player-state p) nil)))
 	(t (with-accessors ((vx vx) (vy vy) (x point-x) (y point-y)
 			    (speed player-speed) (move-floor move-floor)) p
-	     (with-slots (up down right left z) (keystate game)
+	     (with-slots (up down right left z c) (keystate game)
 	       (cond ((key-pressed-p right) (setf vx speed))
 		     ((key-pressed-p left)  (setf vx (- speed)))
 		     (t (setf vx 0)))
 	       (cond ((key-pressed-p up)   (setf vy (- speed)))
 		     ((key-pressed-p down) (setf vy speed))
 		     (t (setf vy 0)))
-	       (cond ((key-down-p z) (atk-start p game))))
+	       (cond ((key-down-p z) (atk-start p game)))
+	       (when (key-down-p c)
+		 (push-state :menu-index game)))
 	     
 	     ;; slanting move
 	     (when (and (/= vx 0) (/= vy 0))
