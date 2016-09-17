@@ -20,7 +20,9 @@
 			 :frame-length (length (sdl:cells srcimg))))))
 
 (defun get-animation (indicator)
-  (getf *animation-table* indicator))
+  (if-let (anim (getf *animation-table* indicator))
+    anim
+    (warn "animation ~a is not found" indicator)))
 
 (defun get-animation-list (&rest keys)
   (mapcar #'get-animation keys))
@@ -36,10 +38,10 @@
 
 
 (defun gameimage-load ()
-  (load-lib-images :player-front "chara_front.png"
-		   :player-back "chara_back.png"
-		   :player-right "chara_right.png"
-		   :player-left "chara_left.png"
+  (load-lib-images :mc-front "mc-front.png"
+		   :mc-back "mc-back.png"
+		   :mc-right "mc-right.png"
+		   :mc-left "mc-left.png"
 		   :test-enemy "test_enemy.png"
 		   :test-bullet "test_bullet.png"
 		   :wall "wall.png"
@@ -61,4 +63,21 @@
   (make-animations '(:test "bomb-r_ani.png"
 		     24 24 96 24)
 		   '(:test2 "explosion2.png"
-		     32 32 128 64 3)))
+		     32 32 128 64 3)
+		   '(:mc-left-walk "mc-left-walk.png"
+		     32 64 64 64 20)
+		   '(:mc-right-walk "mc-right-walk.png"
+		     32 64 64 64 20)
+		   '(:mc-front-walk "mc-front-walk.png"
+		     32 64 64 64 20)
+		   '(:mc-back-walk "mc-back-walk.png"
+		     32 64 64 64 20)
+		   '(:mc-left-atk "mc-left-atk.png"
+		     96 64 288 64 10)
+		   '(:mc-right-atk "mc-right-atk.png"
+		     96 64 288 64 10)
+		   '(:mc-back-atk "mc-back-atk.png"
+		     96 96 288 96 10)
+		   '(:mc-front-atk "mc-front-atk.png"
+		     96 96 288 96 10)
+		   ))

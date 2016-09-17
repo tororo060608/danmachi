@@ -11,3 +11,12 @@
      ,@(mapcar (lambda (x) `(setf ,x nil))
 	       objs)))
 
+(let ((before nil)
+      (timer (make-timer 20)))
+  (defun show-framerate ()
+    (if (funcall timer)
+	(let ((time (sdl:sdl-get-ticks)))
+	  (if (and before (< before time))
+	      (print (/ 1000.0 (/ (- time before) 20))))
+	  (setf before time)))))
+
