@@ -9,7 +9,7 @@
   floor-list
   player
   state-stack
-  (map-id 0)
+  (map-id 1)
   (camera (list 0 0))
   (keystate (make-instance 'keystate)))
 

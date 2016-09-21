@@ -6,11 +6,16 @@
 	   (player game))
   (pop-state game))
 
-;新しいマップ突入時の初期化
-(defun init-map (map game)
+;;新しいマップ突入時の初期化
+
+(defun get-mapfile-name (game)
+  (concatenate 'string "floor"
+	       (to-s (map-id game)) ".map"))
+
+(defun init-map (game)
   (set-nil (object-list game)
 	   (floor-list game))
-  (load-map map game)
+  (load-map (get-mapfile-name game) game)
   (pop-state game))
 
 (defun gaming-state (game)
@@ -34,7 +39,7 @@
     (when (key-down-p z)
       (pop-state game)
       (push-stateset '(:init-game
-		       (:init-map "large.map")
+		       :init-map
 		       :game)
 		     game))))
 
@@ -150,13 +155,15 @@
 		   game)))
 
 (defun display-text-state (strlist game)
-    (with-slots (z) (keystate game)
+    (with-slots (c) (keystate game)
       (sdl:draw-box-* 0 300 640 180
 		      :color sdl:*black*)
       (loop for i below (length strlist) do
-	   (sdl:draw-string-solid-* (nth i strlist)
-				    20 (+ 320 (* i 40))))
-      (when (key-down-p z)
+	   (let ((str (nth i strlist)))
+	     (unless (string= str "")
+	       (sdl:draw-string-solid-* str
+					20 (+ 320 (* i 40))))))
+      (when (key-down-p c)
 	(pop-state game))))
 
 

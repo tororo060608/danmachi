@@ -7,4 +7,5 @@
     (down  :sdl-key-down)
     (z     :sdl-key-z)
     (x     :sdl-key-x)
-    (c     :sdl-key-c))
+    (c     :sdl-key-c)
+    (a     :sdl-key-a))
