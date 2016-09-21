@@ -41,18 +41,32 @@
   (atk 0)
   (image nil))
 
+(defgeneric image-width (image))
+(defmethod image-width (image))
+(defmethod image-width ((surface sdl:surface))
+  (sdl:width surface))
+(defmethod image-width ((animation animation))
+  (sdl:width (elt (sdl:cells (src animation)) 0)))
+
+(defgeneric image-height (image))
+(defmethod image-height (image))
+(defmethod image-height ((surface sdl:surface))
+  (sdl:height surface))
+(defmethod image-height ((animation animation))
+  (sdl:height (elt (sdl:cells (src animation)) 0)))
+
 (defun set-size-by-image (obj)
   (when (and (sdl:initialized-subsystems-p) (image obj))
-    (setf (width obj) (lispbuilder-sdl:width 
-		       (elt (lispbuilder-sdl:cells 
-			     (image obj)) 0))
-	  (height obj) (lispbuilder-sdl:height 
-			(elt (lispbuilder-sdl:cells 
-			      (image obj)) 0)))))
+    (setf (width obj) (image-width (image obj))
+	  (height obj) (image-height (image obj)))))
 
 (defmethod change-image (obj image))
 
 (defmethod change-image ((obj gameobject) (image sdl:surface))
+  (setf (image obj) image)
+  (set-size-by-image obj))
+
+(defmethod change-image ((obj gameobject) (image animation))
   (setf (image obj) image)
   (set-size-by-image obj))
 
