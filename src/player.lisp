@@ -5,7 +5,6 @@
   (player-speed 5)
   (width 32)
   (height 64)
-  move-floor  ;kari
   (player-state :stand)
   (atk-time-limit (make-timer 30))
   (image (get-image :mc-front))
@@ -14,11 +13,14 @@
   df-default
   atk
   df
+  weapon protect adornment
   money
   level
-  equip-list
-  adorn-list
-  (expend-list (list 'cider 10 'soad-pop 10))
+  (expendables-list (list 'cider 10 'soad-pop 10))
+  material-list
+  weapon-list
+  protect-list
+  adornment-list
   (standing-images (4dir-images :mc-front :mc-back :mc-right :mc-left))
   (walk-images (4dir-animations :mc-front-walk :mc-back-walk :mc-right-walk :mc-left-walk))
   (atk-images (4dir-animations :mc-front-atk :mc-back-atk :mc-right-atk :mc-left-atk)))
@@ -58,7 +60,7 @@
 
 (defmethod controller-walk ((p player) game)
   (with-accessors ((vx vx) (vy vy) (x point-x) (y point-y)
-		   (speed player-speed) (move-floor move-floor)) p
+		   (speed player-speed)) p
     (with-slots (up down right left z) (keystate game)
       (cond ((key-pressed-p right) (setf vx speed))
 	    ((key-pressed-p left)  (setf vx (- speed)))
@@ -76,8 +78,8 @@
     (cond ((key-down-p z) (atk-start p game)))))
 
 (defmethod controller-open-menu ((p player) game)
-  (with-slots (c) (keystate game)
-    (when (key-down-p c) 
+  (with-slots (a) (keystate game)
+    (when (key-down-p a) 
       (push-state :menu-index game))))
 
 (defmethod update ((p player) (game game))
@@ -97,13 +99,6 @@
     (:atk 
      (when (funcall (atk-time-limit p))
        (change-state p :stand game))))
-;; kari
-  (when (move-floor p)
-    (push-state
-     (case (move-floor p)
-       (:up '(:init-map "large.map"))
-       (:down '(:init-map "large2.map"))) game)
-    (setf (move-floor p) nil))
   (call-next-method))
 
 (defmethod attack ((p player) (game game))
