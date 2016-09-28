@@ -20,3 +20,7 @@
 	      (print (/ 1000.0 (/ (- time before) 20))))
 	  (setf before time)))))
 
+(defun plist-keys (plist)
+  (loop for i below (length plist) by 2
+       collect (nth i plist)))
+

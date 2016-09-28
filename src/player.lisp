@@ -13,11 +13,14 @@
   df-default
   atk
   df
+  weapon protect adornment
   money
   level
-  equip-list
-  adorn-list
-  (expend-list (list 'cider 10 'soad-pop 10))
+  (expendables-list (list 'cider 10 'soad-pop 10))
+  material-list
+  weapon-list
+  protect-list
+  adornment-list
   (standing-images (4dir-images :mc-front :mc-back :mc-right :mc-left))
   (walk-images (4dir-animations :mc-front-walk :mc-back-walk :mc-right-walk :mc-left-walk))
   (atk-images (4dir-animations :mc-front-atk :mc-back-atk :mc-right-atk :mc-left-atk)))

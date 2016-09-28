@@ -38,3 +38,66 @@
 (defmacro defitems (&rest definition)
   `(progn ,@(mapcar (lambda (def) (cons 'defitem def))
 		   definition)))
+
+(defun item-type (itemsym)
+  (let ((item (get-item itemsym)))
+    (cond ((typep item 'equipment)
+	   (cons :equipment (equip-type item)))
+	   ((typep item 'expendables)
+	    (list :expendables))
+	   ((typep item 'material)
+	    (list :material)))))
+(defun equip-type (itemsym)
+  (let ((item (get-item itemsym)))
+    (cond ((typep item 'weapon) (list :weapon))
+	  ((typep item 'protect) (list :protect))
+	  ((typep item 'adornment) (list :adornment)))))
+(defun item-typep (typesym itemsym)
+  (if (find (intern (symbol-name typesym) "KEYWORD")
+	    (item-type itemsym))
+      t nil))
+
+(defmacro itemtype-case (itemsym &body cases)
+  `(cond ,@(loop for c in cases
+	      collect `((item-typep ,(car c) ,itemsym)
+			,@(cdr c)))))
+
+(defun add-itemlist (plist itemsym)
+  (if (null (getf plist itemsym))
+      (setf (getf plist itemsym) 1)
+      (incf (getf plist itemsym)))
+  plist)
+(defmacro push-itemlist (itemsym item-plist)
+  `(setf ,item-plist
+	 (add-itemlist ,item-plist ,itemsym)))
+(defun push-item (itemsym player)
+  (itemtype-case itemsym
+    ('weapon (push-itemlist itemsym (weapon-list player)))
+    ('protect (push-itemlist itemsym (protect-list player)))
+    ('adornment (push-itemlist itemsym (adornment-list player)))
+    ('expendables (push-itemlist itemsym (expendables-list player)))
+    ('material (push-itemlist itemsym (material-list player)))))
+
+
+(defun rem-itemlist (plist itemsym)
+  (if (null (getf plist itemsym))
+      (error "remove item ~A failed" itemsym)
+      (progn 
+	(decf (getf plist itemsym))
+	(when (zerop (getf plist itemsym))
+	  (remf plist itemsym))
+	plist)))
+(defmacro delete-itemlist (itemsym item-plist)
+  `(setf ,item-plist
+	 (rem-itemlist ,item-plist ,itemsym)))
+(defun delete-item (itemsym player)
+    (itemtype-case itemsym
+      ('weapon (delete-itemlist itemsym (weapon-list player)))
+      ('protect (delete-itemlist itemsym (protect-list player)))
+      ('adornment (delete-itemlist itemsym (adornment-list player)))
+      ('expendables (delete-itemlist itemsym (expendables-list player)))
+      ('material (delete-itemlist itemsym (material-list player)))))
+
+(defun use-expendables (itemsym game)
+  (funcall (effect (get-item itemsym)) game)
+  (delete-item itemsym (player game)))
