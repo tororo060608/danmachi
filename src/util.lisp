@@ -24,3 +24,10 @@
   (loop for i below (length plist) by 2
        collect (nth i plist)))
 
+(defmacro aif (test-form then-form &optional else-form)
+  `(let ((it ,test-form))
+     (if it ,then-form ,else-form)))
+
+(defmacro awhen (test-form &body body)
+  `(aif ,test-form
+        (progn ,@body)))

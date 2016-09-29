@@ -58,30 +58,36 @@
   size
   (topindex 0)
   (cursor 0))
-(define-class item-menu (menu)
-  item-plist)
 
-(defun make-menu (lst)
-  (make-instance 'menu
+(define-class plist-menu (menu)
+  contents-plist)
+
+(define-class item-menu (plist-menu))
+(define-class equip-menu (plist-menu))
+
+(defun make-menu (menusym lst)
+  (make-instance menusym
 		 :contents-list lst
 		 :size (length lst)))
-(defun make-item-menu (plist)
-  (make-instance 'item-menu
+(defun make-plist-menu (menusym plist)
+  (make-instance menusym
 		 :contents-list (plist-keys plist)
-		 :item-plist plist
-		 :size (ash (length plist) -1))) 
+		 :contents-plist plist
+		 :size (length (plist-keys plist))))
 
 (defun get-cursor (menu)
   (nth (cursor menu) (contents-list menu)))
 
 (defun move-next (menu)
   (with-slots (cursor topindex size) menu
-    (setf cursor (mod (1+ cursor) (size menu))
-	  topindex (clamp topindex (- cursor 9) cursor))))
+    (when (plusp size)
+      (setf cursor (mod (1+ cursor) (size menu))
+	    topindex (clamp topindex (- cursor 9) cursor)))))
 (defun move-prev (menu)
   (with-slots (cursor topindex size) menu
-    (setf cursor (mod (1- cursor) (size menu))
-	  topindex (clamp topindex (- cursor 9) cursor))))
+    (when (plusp size)
+      (setf cursor (mod (1- cursor) (size menu))
+	    topindex (clamp topindex (- cursor 9) cursor)))))
 
 (defgeneric display-menu (menu left top step))
 (defmethod display-menu ((menu menu) left top step)
@@ -94,9 +100,8 @@
 	   (+ (* i step) top)))
     (sdl:draw-string-solid-* "->"
 			     left (+ (* cursor step) top))))
-
 (defmethod display-menu ((menu item-menu) left top step)
-  (with-slots (contents-list item-plist size cursor) menu
+  (with-slots (contents-list contents-plist size cursor) menu
     (loop for i
        from 0 below size
        do (let ((y (+ (* i step) top)))
@@ -104,16 +109,43 @@
 	     (name (get-item (nth i contents-list)))
 	     (+ left 30) y)
 	    (sdl:draw-string-solid-*
-	     (to-s (getf item-plist (nth i contents-list)))
+	     (to-s (getf contents-plist (nth i contents-list)))
+	     (+ left 200) y)))
+    (sdl:draw-string-solid-*
+     "->" left (+ (* cursor step) top))
+    (when (get-item (nth cursor contents-list))
+      (sdl:draw-string-solid-*
+       (description (get-item (nth cursor contents-list)))
+       0 450))))
+
+(defun equip-info (itemsym)
+  (aif (get-item itemsym)
+       (name it) "-"))
+
+(defmethod display-menu ((menu equip-menu) left top step)
+  (with-slots (contents-list contents-plist size cursor) menu
+    (loop for i
+       from 0 below size
+       do (let ((y (+ (* i step) top)))
+	    (sdl:draw-string-solid-*
+	     (to-s (nth i contents-list))
+	     (+ left 30) y)
+	    (sdl:draw-string-solid-*
+	     (equip-info (getf contents-plist
+			       (nth i contents-list)))
 	     (+ left 200) y)))
     (sdl:draw-string-solid-*
      "->" left (+ (* cursor step) top))))
 
-(defun update-menu (item-menu new-plist)
-  (with-slots (contents-list item-plist size) item-menu
+(defun update-menu (menu new-plist)
+  (with-slots (contents-list contents-plist
+	       size cursor topindex) menu
     (setf contents-list  (plist-keys new-plist)
-	  item-plist  new-plist
-	  size (length contents-list))))
+	  contents-plist  new-plist
+	  size (length contents-list)
+	  cursor (clamp cursor 0 (max (1- size) 0))
+	  topindex (clamp topindex (- cursor 9) cursor))))
+
 
 (defmacro left-menu (menusym)
   `(progn (setf ,menusym nil)
@@ -123,7 +155,7 @@
   (defun menu-index-state (game)
     (with-slots (up down z x) (keystate game)
       (unless menu
-	(setf menu (make-menu '(:equip :item))))
+	(setf menu (make-menu 'menu '(:equip :item))))
       (sdl:clear-display sdl:*black*)
       (sdl:draw-string-solid-* "menu index"
 			       30 30)
@@ -141,26 +173,64 @@
     (with-slots (expendables-list) (player game)
       (with-slots (z x down up) (keystate game)
 	(sdl:clear-display sdl:*black*)
-	(when (and (null menu)
-		   (not (null expendables-list)))
+	(when (null menu)
 	  (setf menu
-		(make-item-menu expendables-list)))
-	(unless (null menu)
-	  (with-slots (size cursor) menu
-	    (display-menu menu 70 70 30)
-	    (cond ((key-down-p up) (move-next menu))
-		  ((key-down-p down) (move-prev menu))
-		  ((key-down-p z)
-		   (use-expendables (get-cursor menu) game)
-		   (update-menu menu expendables-list)
-		   (if (null expendables-list)
-		       (setf menu nil))
-		   (setf cursor (clamp 0 cursor (1- size)))))))
-	(when (key-down-p x)
-	  (left-menu menu))))))
+		(make-plist-menu 'item-menu expendables-list)))
+	  (display-menu menu 70 70 30)
+	  (cond ((key-down-p down) (move-next menu))
+		((key-down-p up) (move-prev menu))
+		((key-down-p x) (left-menu menu))
+		((and (key-down-p z)
+		      (get-cursor menu))
+		 (use-expendables (get-cursor menu) game)
+		 (update-menu menu expendables-list)))))))
 
-(defun select-equip-state (game)
-  (pop-state game))
+(defmacro define-equip-state (name part-sym equip-list)
+  `(defun ,name (game)
+    (with-slots (,equip-list equip) (player game)
+      (with-slots (z x down up) (keystate game)
+	(sdl:clear-display sdl:*black*)
+	(when (null item-menu)
+	  (setf item-menu
+		(make-plist-menu 'item-menu ,equip-list)))
+	(display-menu equip-menu 0 70 30)
+	(display-menu item-menu 0 270 30)
+	(cond ((key-down-p down) (move-next item-menu))
+	      ((key-down-p up) (move-prev item-menu))
+	      ((key-down-p x) (left-menu item-menu))
+	      ((and (key-down-p z)
+		    (get-cursor item-menu))
+	       (awhen (getf equip ,part-sym)
+		 (push-item it (player game)))
+	       (let ((itemsym (get-cursor item-menu)))
+		 (setf (getf equip ,part-sym) itemsym)
+		 (equip-effect (get-item itemsym) game)
+		 (delete-item itemsym (player game)))
+	       (update-menu item-menu ,equip-list)))))))
+
+(let ((equip-menu nil)
+      (item-menu nil))
+  (defun select-equip-state (game)
+    (with-slots (equip) (player game)
+      (with-slots (z x down up) (keystate game)
+	(sdl:clear-display sdl:*black*)
+	(when (null equip-menu)
+	  (setf equip-menu
+		(make-plist-menu 'equip-menu equip)))
+	  (display-menu equip-menu 0 70 30)
+	  (cond ((key-down-p down) (move-next equip-menu))
+		((key-down-p up) (move-prev equip-menu))
+		((key-down-p x) (left-menu equip-menu))
+		((and (key-down-p z)
+		      (get-cursor equip-menu))
+		 (case (get-cursor equip-menu)
+		   (weapon (push-state :select-weapon game))
+		   (protect (push-state :select-protect game))
+		   (adornment (push-state :select-adornment game))))))))
+  (define-equip-state select-weapon-state 'weapon weapon-list)
+  (define-equip-state select-protect-state 'protect protect-list)
+  (define-equip-state select-adornment-state 'adornment adornment-list))
+
 
 (defun push-text-state (filename game)
   (let ((lines nil)
@@ -201,6 +271,9 @@
 	   :game #'gaming-state
 	   :menu-index #'menu-index-state
 	   :select-equip #'select-equip-state
+	   :select-weapon #'select-weapon-state
+	   :select-protect #'select-protect-state
+	   :select-adornment #'select-adornment-state
 	   :item-table #'item-table-state
 	   :display-text #'display-text-state)))
 
