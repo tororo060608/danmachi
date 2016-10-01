@@ -77,7 +77,7 @@
 		   '(:mc-right-atk "mc-right-atk.png"
 		     96 64 288 64 10)
 		   '(:mc-back-atk "mc-back-atk.png"
-		     96 96 288 96 10)
+		     96 128 288 128 10)
 		   '(:mc-front-atk "mc-front-atk.png"
-		     96 96 288 96 10)
+		     96 128 288 128 10)
 		   ))

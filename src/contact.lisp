@@ -120,3 +120,4 @@
 	       (faced-p player npc)
 	       (key-down-p c))
       (push-text-state (textfile npc) game))))
+

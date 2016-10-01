@@ -15,10 +15,10 @@
   df
   money
   level
-  (equip (list 'weapon nil 'protect nil 'adornment nil))
+  (equip (list 'weapon 'sword-of-wood 'protect nil 'adornment nil))
   (expendables-list (list 'cider 10 'soad-pop 10))
   material-list
-  (weapon-list (list 'sword-of-wood 2))
+  (weapon-list (list 'sword-of-iron 2))
   protect-list
   adornment-list
   (standing-images (4dir-images :mc-front :mc-back :mc-right :mc-left))

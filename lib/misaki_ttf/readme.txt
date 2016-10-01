@@ -1,35 +1,29 @@
 ===============================================================================
 
-                              ”üçƒtƒHƒ“ƒg TTF ”Å
+                                  k8x12 TTF ç‰ˆ
 
 ===============================================================================
 
-@”üçƒtƒHƒ“ƒg TTF ”Å‚Í TrueType Œ`Ž®‚ÌƒtƒHƒ“ƒg‚Å‚·B
+ã€€k8x12 TTF ç‰ˆã¯ TrueType å½¢å¼ã®ç­‰å¹…ãƒ•ã‚©ãƒ³ãƒˆã§ã™ã€‚
+ã€€å®Ÿä½“ã¯ k8x12 ã®ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã‚’ã¨ã£ãŸã‚‚ã®ã§ã€ãƒ“ãƒƒãƒˆãƒžãƒƒãƒ—ã¯å«ã‚“ã§ã„ã¾ã›ã‚“ã€‚
 
 
-œƒA[ƒJƒCƒu‚Ì“à—e
-–misaki.txt
-@”üçƒtƒHƒ“ƒg‚Ìƒ}ƒjƒ…ƒAƒ‹
+â—ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã®å†…å®¹
+ï¼Šk8x12.txt
+ã€€k8x12 ã®ãƒžãƒ‹ãƒ¥ã‚¢ãƒ«
 
-–readme.txt
-@”üçƒtƒHƒ“ƒg TTF ”Å‚Ìƒ}ƒjƒ…ƒAƒ‹ (‚±‚Ìƒtƒ@ƒCƒ‹)
+ï¼Šreadme.txt
+ã€€k8x12 TTF ç‰ˆã®ãƒžãƒ‹ãƒ¥ã‚¢ãƒ« (ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«)
 
-–misaki_gothic.ttf
-@”üçƒSƒVƒbƒN (ƒAƒEƒgƒ‰ƒCƒ“)
+ï¼Šk8x12.ttf
+ã€€k8x12 TTF ç‰ˆ (Regular)
 
-–misaki_mincho.ttf
-@”üç–¾’© (ƒAƒEƒgƒ‰ƒCƒ“)
+ï¼Šk8x12L.ttf
+ã€€k8x12L TTF ç‰ˆ (Regular)
 
-
-œ”õl
-–§ìã‚Ì“s‡‚É‚æ‚èA–„ž‚Ýƒrƒbƒgƒ}ƒbƒv”Å‚Ì“¯«‚ðŽæ‚èŽ~‚ß‚Ä‚¢‚Ü‚·B
-@2012-06-03 ˆÈ‘O‚Ì”Å‚É‚ÍŠÜ‚Ü‚ê‚é‚Ì‚ÅA•K—v‚È•û‚Í‚»‚¿‚ç‚ð‚²—˜—p‚­‚¾‚³‚¢B
+ï¼Šk8x12S.ttf
+ã€€k8x12S TTF ç‰ˆ (Regular)
 
 
-œƒ‰ƒCƒZƒ“ƒX
-@ƒA[ƒJƒCƒu“¯«‚Ìumisaki.txtv‚Ì“à—e‚É]‚¤‚à‚Ì‚Æ‚µ‚Ü‚·B
-
-
-œŽÓŽ«
-@TTF ”Åì¬‚É‚Í George Williams ‚³‚ñì‚ÌƒtƒHƒ“ƒgƒGƒfƒBƒ^ FontForge ‚ð
-@Žg—p‚µ‚Ü‚µ‚½B‚±‚Ìê‚ðŽØ‚è‚Ä‚¨—ç\‚µã‚°‚Ü‚·B
+â—ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
+ã€€ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–åŒæ¢±ã®ã€Œk8x12.txtã€ã®å†…å®¹ã«å¾“ã†ã‚‚ã®ã¨ã—ã¾ã™ã€‚
