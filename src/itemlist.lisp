@@ -26,6 +26,12 @@
    :atk 1
    :df 0
    :atk-area (list 96 48))
+  (sword-of-iron
+   weapon
+   "鉄の棒" "ただの鉄の棒"
+   :atk 3
+   :df 0
+   :atk-area (list 96 48))
   (bad-cloths
    protect
    "ボロい服" "ゴミ箱から拾ってきた"
