@@ -1,12 +1,15 @@
 (in-package :danmachi)
 
 (define-class game ()
-  (window-width 640)
-  (window-height 480)
+  (window-width 1280)
+  (window-height 960)
   (map-width 0)
   (map-height 0)
   object-list
   floor-list
+  draw-floor-list
+  update-object-list
+  collide-object-list
   player
   state-stack
   (map-id 1)
@@ -74,14 +77,29 @@
   (setf (alive obj) nil))
 
 (defgeneric add-object (obj game))
+
 (defun update-game (game)
-  (mapc (lambda (obj) (update obj game)) (object-list game))
+  (mapc (lambda (obj) (update obj game)) (update-object-list game))
   (setf (object-list game)
-	(remove-if-not #'alive (object-list game))))
+	(remove-if-not #'alive (object-list game))
+	(collide-object-list game) 
+	(remove-if
+	 (lambda (obj) 
+	   (out-of-gamearea-p obj game 100))
+	 (object-list game))
+	(update-object-list game)
+	(remove-if 
+	 (lambda (obj) 
+	   (out-of-gamearea-p obj game))
+	 (collide-object-list game))
+	(draw-floor-list game)
+	(remove-if (lambda (obj) 
+		     (out-of-gamearea-p obj game))
+		   (floor-list game))))
 
 (defun draw-game (game)
-  (mapc (lambda (obj) (draw obj game)) (floor-list game))
-  (mapc (lambda (obj) (draw obj game)) (object-list game)))
+  (mapc (lambda (obj) (draw obj game)) (draw-floor-list game))
+  (mapc (lambda (obj) (draw obj game)) (update-object-list game)))
 
 ; add new object
 (defmethod add-object ((obj gameobject) (game game))
@@ -140,9 +158,8 @@
   (incf	(point-y object) (vy object)))
 
 ;out-gamearea detect
-(defun out-of-gamearea-p (object game)
-  (let* ((margin 50)
-	 (left (- margin))
+(defun out-of-gamearea-p (object game &optional (margin 50))
+  (let* ((left (- margin))
 	 (right (+ (window-width game) margin))
 	 (top (- margin))
 	 (bottom (+ (window-height game) margin)))
