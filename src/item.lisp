@@ -42,7 +42,7 @@
 (defun item-type (itemsym)
   (let ((item (get-item itemsym)))
     (cond ((typep item 'equipment)
-	   (cons :equipment (equip-type item)))
+	   (cons :equipment (equip-type itemsym)))
 	   ((typep item 'expendables)
 	    (list :expendables))
 	   ((typep item 'material)
