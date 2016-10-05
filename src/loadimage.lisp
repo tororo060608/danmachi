@@ -56,28 +56,30 @@
 		   :sword-right2 "sword-right2.png"
 		   :sword-left1 "sword-left1.png"
 		   :sword-left2 "sword-left2.png"
+		   :chototsu-front "chototu-front.png"
+		   :chototsu-back "chototu-back.png"
+		   :chototsu-left "chototu-left.png"
+		   :chototsu-right "chototu-right.png"
 		   ))
 
 
 (defun gameanimation-load ()
-  (make-animations '(:test "bomb-r_ani.png"
-		     24 24 96 24)
-		   '(:test2 "explosion2.png"
-		     32 32 128 64 3)
-		   '(:mc-left-walk "mc-left-walk.png"
-		     32 64 64 64 20)
-		   '(:mc-right-walk "mc-right-walk.png"
-		     32 64 64 64 20)
-		   '(:mc-front-walk "mc-front-walk.png"
-		     32 64 64 64 20)
-		   '(:mc-back-walk "mc-back-walk.png"
-		     32 64 64 64 20)
-		   '(:mc-left-atk "mc-left-atk.png"
-		     96 64 288 64 10)
-		   '(:mc-right-atk "mc-right-atk.png"
-		     96 64 288 64 10)
-		   '(:mc-back-atk "mc-back-atk.png"
-		     96 128 288 128 10)
-		   '(:mc-front-atk "mc-front-atk.png"
-		     96 128 288 128 10)
-		   ))
+  (make-animations 
+   '(:test "bomb-r_ani.png" 24 24 96 24)
+   '(:test2 "explosion2.png" 32 32 128 64 3)
+   '(:mc-left-walk "mc-left-walk.png" 32 64 64 64 20)
+   '(:mc-right-walk "mc-right-walk.png" 32 64 64 64 20)
+   '(:mc-front-walk "mc-front-walk.png" 32 64 64 64 20)
+   '(:mc-back-walk "mc-back-walk.png" 32 64 64 64 20)
+   '(:mc-left-atk "mc-left-atk.png" 96 64 288 64 10)
+   '(:mc-right-atk "mc-right-atk.png" 96 64 288 64 10)
+   '(:mc-back-atk "mc-back-atk.png" 96 128 288 128 10)
+   '(:mc-front-atk "mc-front-atk.png" 96 128 288 128 10)
+   '(:chototsu-front-dash "chototu-front-dash.png"
+     48 64 96 64 10)
+   '(:chototsu-back-dash "chototu-back-dash.png"
+     48 64 96 64 10)
+   '(:chototsu-left-dash "chototu-left-dash.png"
+     64 48 128 48 10)
+   '(:chototsu-right-dash "chototu-right-dash.png"
+     64 48 128 48 10)))

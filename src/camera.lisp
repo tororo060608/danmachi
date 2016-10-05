@@ -1,6 +1,6 @@
 (in-package danmachi)
 
-(defparameter *camera-move-position* 120)
+(defparameter *camera-move-position* 300)
 
 (defun init-camera (game)
   (setf (camera game) 
