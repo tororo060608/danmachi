@@ -16,6 +16,7 @@
   (set-nil (object-list game)
 	   (floor-list game))
   (load-map (get-mapfile-name game) game)
+  (init-camera game)
   (pop-state game))
 
 (defun gaming-state (game)
