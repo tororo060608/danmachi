@@ -74,8 +74,7 @@
 
 (defcollide (player player) (enemy enemy)
   (when (collidep player enemy)
-    (damage enemy player)
-    (divide-half player enemy (vx player) (vy player))))
+    (damage enemy player)))
 
 (defcollide (player player) (bullet enemy-bullet)
   (when (collidep player bullet)
@@ -85,17 +84,6 @@
 (defcollide (weapon player-attack) (enemy enemy)
   (when (collidep weapon enemy)
     (damage weapon enemy)))
-
-(defcollide (player player) (enemy test-enemy-react)
-  (call-next-method)
-  (whens ((and (not (player-found-p enemy))
-	       (around-p player enemy(react-dist enemy)))
-	  (setf (player-found-p enemy) t))
-	 ((player-found-p enemy)
-	  (let ((dir (dir-univec (point-x enemy) (point-y enemy)
-				 (point-x player) (point-y player))))
-	    (setf (vx enemy) (* (first dir) (velocity enemy))
-		  (vy enemy) (* (second dir) (velocity enemy)))))))
 
 (defcollide (player player) (upstairs upstairs)
   (with-slots (c) (keystate game)

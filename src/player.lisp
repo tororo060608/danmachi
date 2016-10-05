@@ -137,7 +137,6 @@
   (setf (player-state p) 'atk-e))
 
 (defmethod change-dire-image ((p player) game)
-  (print (direction p))
   (change-image p (getf (case (player-state p) 
 			  (:stand (standing-images p))
 			  (:walk (walk-images p))) 

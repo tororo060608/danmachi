@@ -1,9 +1,13 @@
 (in-package danmachi)
 
-(defparameter *camera-move-position* 120)
+(defparameter *camera-move-position* 300)
 
 (defun init-camera (game)
-  (setf (camera game) (list 0 0)))
+  (setf (camera game) 
+	(list (- (point-x (player game))
+		 (half (window-width game)))
+	      (- (point-y (player game))
+		 (half (window-height game))))))
 
 (defun camera-x (game) (first (camera game)))
 (defun camera-y (game) (second (camera game)))
@@ -14,7 +18,7 @@
 	 (clamp  (+ (camera-x game) dx)
 		 0
 		 (- (map-width game)
-			   (window-width game)))
+		    (window-width game)))
 	 (clamp (+ (camera-y game) dy)
 		0
 		(- (map-height game)
