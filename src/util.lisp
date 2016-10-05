@@ -1,5 +1,8 @@
 (in-package :danmachi)
 
+(defun half (a)
+  (ash a -1))
+
 (defun take-nth (n seq)
   (do ((i 0 (+ i n))
        (res nil (cons (elt seq i) res))

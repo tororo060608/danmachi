@@ -10,15 +10,15 @@
       (setf (map-width game) (* *block-size* (first size))
 	    (map-height game) ( * *block-size* (second size)))
       (dotimes (y (second size) game)
-	(let ((line (take-nth 2 (read-line s))))
+	(let ((line (or (take-nth 2  (read-line s)) (take-nth 2 (read-line s)))))
 	  (iter (for x to (first size))
 	    (for s in line)
 	    (when-let (objs (getf table s))
 	      (mapc (lambda (obj)
 		      ((lambda (o) (add-object o game))
 		       (make-instance obj
-				      :point-x (+ (ash *block-size* -1) (* *block-size* x))
-				      :point-y (+ (ash *block-size* -1) (* *block-size* y)))))
+				      :point-x (+ (half *block-size*) (* *block-size* x))
+				      :point-y (+ (half *block-size*) (* *block-size* y)))))
 		    (ensure-list objs)))))))))
 
 

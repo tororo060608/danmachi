@@ -1,8 +1,8 @@
 (in-package :danmachi)
 
 (define-class game ()
-  (window-width 1280)
-  (window-height 960)
+  (window-width 960)
+  (window-height 720)
   (map-width 0)
   (map-height 0)
   object-list
