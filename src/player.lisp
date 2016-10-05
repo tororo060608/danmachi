@@ -9,10 +9,11 @@
   (atk-time-limit (make-timer 30))
   (image (get-image :mc-front))
   (mp 0)
+  (maxhp 100) (maxmp 0)
   (atk-default 0)
   (df-default 0)
-  atk
-  df
+  (atk 0)
+  (df 0)
   money
   level
   (equip (list 'weapon 'sword-of-wood 'protect nil 'adornment nil))

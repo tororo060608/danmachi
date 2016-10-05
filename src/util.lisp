@@ -34,3 +34,14 @@
 (defmacro awhen (test-form &body body)
   `(aif ,test-form
         (progn ,@body)))
+
+(defmacro draw-strings (&body info-list)
+  `(progn
+     ,@(loop for i below (length info-list) by 3
+	  collect `(sdl:draw-string-solid-* ,(nth i info-list)
+					    ,(nth (+ i 1) info-list)
+					    ,(nth (+ i 2) info-list)))))
+
+(defun string-conc (&rest strings)
+  (apply #'concatenate 'string strings))
+
