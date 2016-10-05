@@ -25,6 +25,7 @@
 		 (:file "camera")
 		 (:file "create")
 		 (:file "contact")
+		 (:file "menu")
 		 (:file "state")
 		 (:file "font")
 		 (:file "main"))))
