@@ -90,14 +90,14 @@
     (when (and (collidep player upstairs)
 	       (key-down-p c))
       (decf (map-id game))
-      (push-state :init-map game))))
+      (push-stateset '(:darkening :init-map) game))))
 
 (defcollide (player player) (downstairs downstairs)
   (with-slots (c) (keystate game)
     (when (and (collidep player downstairs)
 	       (key-down-p c))
       (incf (map-id game))
-      (push-state :init-map game))))
+      (push-stateset '(:darkening :init-map) game))))
 
 (defparameter *npc-react-dist* 60)
 (defcollide (player player) (npc npc)

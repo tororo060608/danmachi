@@ -59,6 +59,16 @@
       (pop-state game)
       (push-state :title game))))
 
+(let ((frame-rest 20))
+  (defun darkening-state (game)
+    (sdl:draw-box-*
+     0 0 (window-width game) (window-height game)
+     :color (sdl:color :a 15))
+    (decf frame-rest)
+    (when (zerop frame-rest)
+      (setf frame-rest 60)
+      (pop-state game))))
+
 (defun push-text-state (filename game)
   (let ((lines nil)
 	(size nil))
@@ -96,6 +106,7 @@
 	   :init-game #'init-game
 	   :init-map #'init-map
 	   :game #'gaming-state
+	   :darkening #'darkening-state
 	   :menu-index #'menu-index-state
 	   :select-equip #'select-equip-state
 	   :select-weapon #'select-weapon-state
