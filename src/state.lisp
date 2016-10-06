@@ -19,6 +19,16 @@
   (init-camera game)
   (pop-state game))
 
+(defun display-player-hp (player)
+  (with-slots (hp maxhp) player
+    (draw-strings (to-s hp) 20 20
+		  (string-conc "/" (to-s maxhp))
+		  40 40)
+    (sdl:draw-box-* 60 20 200 20 :color sdl:*red*)
+    (sdl:draw-box-* 60 20
+		    (round (* (/ hp maxhp) 200)) 20
+		    :color sdl:*green*)))
+
 (defun gaming-state (game)
   (sdl:clear-display sdl:*black*)
   (update-camera game)
@@ -35,7 +45,8 @@
   (unless (alive (player game))
     (pop-state game)
     (push-state :gameover game))
-  (draw-game game))
+  (draw-game game)
+  (display-player-hp (player game)))
 
 (defun title-state (game)
   (with-slots (up down left right z)
@@ -58,6 +69,16 @@
     (when (key-down-p z)
       (pop-state game)
       (push-state :title game))))
+
+(let ((frame-rest 20))
+  (defun darkening-state (game)
+    (sdl:draw-box-*
+     0 0 (window-width game) (window-height game)
+     :color (sdl:color :a 15))
+    (decf frame-rest)
+    (when (zerop frame-rest)
+      (setf frame-rest 60)
+      (pop-state game))))
 
 (defun push-text-state (filename game)
   (let ((lines nil)
@@ -96,6 +117,7 @@
 	   :init-game #'init-game
 	   :init-map #'init-map
 	   :game #'gaming-state
+	   :darkening #'darkening-state
 	   :menu-index #'menu-index-state
 	   :select-equip #'select-equip-state
 	   :select-weapon #'select-weapon-state

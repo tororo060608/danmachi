@@ -5,6 +5,8 @@
   (player-speed 5)
   (width 32)
   (height 64)
+  (draw-width 32)
+  (draw-height 64)
   (player-state :stand)
   (atk-time-limit (make-timer 30))
   (image (get-image :mc-front))
@@ -26,6 +28,32 @@
   (walk-images (4dir-animations :mc-front-walk :mc-back-walk :mc-right-walk :mc-left-walk))
   (atk-images (4dir-animations :mc-front-atk :mc-back-atk :mc-right-atk :mc-left-atk)))
 
+(defmethod set-size-by-image ((obj player))
+  (when (and (sdl:initialized-subsystems-p) (image obj))
+    (setf (draw-width obj) (image-width (image obj))
+	  (draw-height obj) (image-height (image obj)))))
+
+(defun player-draw-x (p)
+  (- (point-x p) (ash (draw-width p) -1)))
+
+(defun player-draw-y (p)
+  (- (point-y p) (ash (draw-height p) -1)))
+
+(defmethod draw ((object player) (game game))
+  (if (image object)
+      (draw-image (image object)
+		  (player-draw-x object)
+		  (player-draw-y object)
+		  game)
+      (sdl:draw-box-* (round (x-in-camera
+			      (player-draw-x object)
+			      game))
+		      (round (y-in-camera
+			      (player-draw-y object)
+			      game))
+		      (draw-width object)
+		      (draw-height object)
+		      :color sdl:*blue*)))
 
 (defmethod add-object ((p player) (game game))
   (if (player game)

@@ -58,7 +58,8 @@
 (defmethod image-height ((animation animation))
   (sdl:height (elt (sdl:cells (src animation)) 0)))
 
-(defun set-size-by-image (obj)
+(defgeneric set-size-by-image (obj))
+(defmethod set-size-by-image ((obj gameobject))
   (when (and (sdl:initialized-subsystems-p) (image obj))
     (setf (width obj) (image-width (image obj))
 	  (height obj) (image-height (image obj)))))
