@@ -4,18 +4,22 @@
      expendables
      "サイダー" "砂糖水。hp回復"
      :effect (lambda (game)
-	       (incf (hp (player game)) 50)))
+	       (with-slots (hp maxhp) (player game)
+		   (setf hp (min maxhp (+ hp 50))))))
     (soad-pop
      expendables
      "ラムネ" "砂糖水。mp回復"
      :effect (lambda (game)
-	       (incf (mp (player game)) 50)))
+	       (with-slots (mp maxmp) (player game)
+		 (setf mp (min maxmp (+ mp 50))))))
   (coke
    expendables
    "コーラ" "砂糖水。mpとhp回復"
    :effect (lambda (game)
-	     (incf (mp (player game)) 50)
-	     (incf (hp (player game)) 50)))
+	     (with-slots (hp maxhp
+			  mp maxmp) (player game)
+	       (setf hp (min maxhp (+ hp 50))
+		     mp (min maxmp (+ mp 50))))))
   (string
    expendables
    "ヒモキュー" "グミ。ダンジョンから街に帰還できる")
