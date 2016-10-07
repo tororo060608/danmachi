@@ -53,10 +53,7 @@
 			      game))
 		      (draw-width object)
 		      (draw-height object)
-		      :color sdl:*blue*))
-  (sdl:draw-box-* (round (x-in-camera (point-x object) game))
-		  (round (y-in-camera (point-y object) game)) 4 4
-		  :color sdl:*red*))
+		      :color sdl:*blue*)))
 
 (defmethod add-object ((p player) (game game))
   (if (player game)

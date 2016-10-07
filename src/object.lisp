@@ -186,13 +186,7 @@
   (width 32)
   (height 32)
   (image (get-image :floor)))
-#|
-(defmethod draw ((obj game-wall) game)
-  (call-next-method)
-  (sdl:draw-box-* (round (x-in-camera (point-x obj) game))
-		  (round (y-in-camera (point-y obj) game)) 4 4
-		  :color sdl:*red*))
-|#
+
 (defmethod add-object ((floor game-floor) (game game))
   (push floor (floor-list game)))
 
