@@ -204,9 +204,9 @@
 (define-class pop-floor (effect-floor)
   (image (get-image :floor))
   (pop-timer (make-timer 600))
-  (search-dist 300)
+  (search-dist 500)
   (around-chara 0)
-  (enemy-syms '(chototsu bee red-bee test-enemy test-enemy2))
+  (enemy-syms '(chototsu bee))
   (probability 30))
 
 

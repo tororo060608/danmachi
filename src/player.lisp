@@ -11,7 +11,8 @@
   (atk-time-limit (make-timer 30))
   (image (get-image :mc-front))
   (mp 0)
-  (maxhp 100) (maxmp 0)
+  (hp 500)
+  (maxhp 500) (maxmp 0)
   (atk-default 0)
   (df-default 0)
   (atk 0)
@@ -19,9 +20,9 @@
   money
   level
   (equip (list 'weapon 'sword-of-wood 'protect nil 'adornment nil))
-  (expendables-list (list 'cider 10 'soad-pop 10))
+  (expendables-list (list 'cider 10))
   material-list
-  (weapon-list (list 'sword-of-iron 2))
+  weapon-list
   protect-list
   adornment-list
   (standing-images (4dir-images :mc-front :mc-back :mc-right :mc-left))
@@ -171,6 +172,8 @@
   (height)
   (atk 50)
   (time-limit (make-timer 10)))
+
+(defmethod draw ((obj player-attack) game))
 
 (defmethod update ((patk player-attack) (game game))
   (call-next-method)

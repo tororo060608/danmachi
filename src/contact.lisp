@@ -117,6 +117,7 @@
        game)
       (kill item))))
 
+
 (defparameter *npc-react-dist* 60)
 (defcollide (player player) (npc npc)
   (with-slots (c) (keystate game)

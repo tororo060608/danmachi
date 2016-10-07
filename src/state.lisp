@@ -53,7 +53,7 @@
       (keystate game)
     (sdl:clear-display sdl:*white*)
     (sdl:draw-surface-at-* (get-image :title) 180 150)
-    (sdl:draw-string-solid-* "Press Z-KEY to START" 380 450
+    (sdl:draw-string-solid-* "Press Z-KEY to START" 350 450
 			     :color sdl:*black*)
     (when (key-down-p z)
       (pop-state game)
@@ -66,10 +66,21 @@
   (with-slots (up down left right z)
       (keystate game)
     (sdl:clear-display sdl:*white*)
-    (sdl:draw-surface-at-* (get-image :gameover) 230 85)	
+    (sdl:draw-surface-at-* (get-image :gameover) 230 85)
     (when (key-down-p z)
       (pop-state game)
       (push-state :title game))))
+
+(defun gameclear-state (game)
+  (with-slots (up down left right z)
+      (keystate game)
+    (sdl:draw-surface-at-* (get-image :gameclear) 180 150)
+    (sdl:draw-string-solid-* "Press Z-KEY to Title" 350 450
+			     :color sdl:*white*)
+    (when (key-down-p z)
+      (pop-state game)
+      (push-state :title game))))
+
 
 (let ((frame-rest 20))
   (defun darkening-state (game)
@@ -119,6 +130,7 @@
     (setf *state-func-table*
      (list :title #'title-state
 	   :gameover #'gameover-state
+	   :gameclear #'gameclear-state
 	   :init-game #'init-game
 	   :init-map #'init-map
 	   :game #'gaming-state
