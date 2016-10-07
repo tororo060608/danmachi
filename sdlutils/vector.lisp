@@ -2,6 +2,8 @@
 
 (defun rad (degree) (* pi (/ degree 180.0)))
 
+(defun deg (radian) (* 180 (/ radian pi)))
+
 (defun vec-abs (x y)
   (sqrt (+ (* x x) (* y y))))
 
