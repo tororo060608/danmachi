@@ -45,3 +45,12 @@
 (defun string-conc (&rest strings)
   (apply #'concatenate 'string strings))
 
+(defun atan-vec (vec)
+  (atan (cadr vec) (car vec)))
+
+(defun atan2 (vec-a vec-b)
+  (atan (- (cadr vec-b) (cadr vec-a))
+	(- (car vec-b) (car vec-a))))
+
+(defun atan2-* (sx sy tx ty)
+  (atan (- ty sy) (- tx sx)))

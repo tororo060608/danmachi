@@ -3,8 +3,8 @@
 ;;player object
 (define-class player (gamecharacter)
   (player-speed 5)
-  (width 32)
-  (height 64)
+  (width 16)
+  (height 32)
   (draw-width 32)
   (draw-height 64)
   (player-state :stand)
@@ -53,7 +53,10 @@
 			      game))
 		      (draw-width object)
 		      (draw-height object)
-		      :color sdl:*blue*)))
+		      :color sdl:*blue*))
+  (sdl:draw-box-* (round (x-in-camera (point-x object) game))
+		  (round (y-in-camera (point-y object) game)) 4 4
+		  :color sdl:*red*))
 
 (defmethod add-object ((p player) (game game))
   (if (player game)
@@ -65,11 +68,6 @@
 	(setf (player game) p)
 	(call-next-method))))
 
-(defmethod draw ((obj player) game)
-  (call-next-method)
-  (sdl:draw-box-* (round (x-in-camera (point-x obj) game))
-		  (round (y-in-camera (point-y obj) game)) 4 4
-		  :color sdl:*red*))
 
 (defmethod change-state ((p player) state game)
   (setf (player-state p) state))

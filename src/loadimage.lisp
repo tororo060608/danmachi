@@ -38,7 +38,9 @@
 
 
 (defun gameimage-load ()
-  (load-lib-images :mc-front "mc-front.png"
+  (load-lib-images :title "title.png"
+		   :gameover "gameover.png"
+		   :mc-front "mc-front.png"
 		   :mc-back "mc-back.png"
 		   :mc-right "mc-right.png"
 		   :mc-left "mc-left.png"
@@ -82,4 +84,8 @@
    '(:chototsu-left-dash "chototu-left-dash.png"
      64 48 128 48 10)
    '(:chototsu-right-dash "chototu-right-dash.png"
-     64 48 128 48 10)))
+     64 48 128 48 10)
+   '(:bee-right "sinugayoi-right.png"
+     48 48 96 48 10)
+   '(:bee-left "sinugayoi-left.png"
+     48 48 96 48 10)))
