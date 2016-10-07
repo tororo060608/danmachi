@@ -21,11 +21,11 @@
 
 (defun display-player-hp (player)
   (with-slots (hp maxhp) player
-    (draw-strings (to-s hp) 20 20
+    (draw-strings (to-s hp) 10 10
 		  (string-conc "/" (to-s maxhp))
 		  40 40)
-    (sdl:draw-box-* 60 20 200 20 :color sdl:*red*)
-    (sdl:draw-box-* 60 20
+    (sdl:draw-box-* 80 20 200 20 :color sdl:*red*)
+    (sdl:draw-box-* 80 20
 		    (round (* (/ hp maxhp) 200)) 20
 		    :color sdl:*green*)))
 
@@ -81,13 +81,10 @@
       (setf frame-rest 60)
       (pop-state game))))
 
-(defun push-text-state (filename game)
+(defun push-message-state (mes-list game)
   (let ((lines nil)
 	(size nil))
-    (with-open-file (stream (lib-path filename))
-      (iter (for l in-stream stream using #'read-line)
-	    (push l lines)))
-    (setf lines (reverse lines)
+    (setf lines (reverse mes-list)
 	  size (length lines))
     (push-stateset (loop for i below size by 4 collect
 			(list :display-text
@@ -96,15 +93,22 @@
 				 collect (nth (+ i j) lines))))
 		   game)))
 
+(defun push-text-state (filename game)
+  (let ((lines nil))
+    (with-open-file (stream (lib-path filename))
+      (iter (for l in-stream stream using #'read-line)
+	    (push l lines)))
+    (push-message-state lines game)))
+
 (defun display-text-state (strlist game)
     (with-slots (z c) (keystate game)
-      (sdl:draw-box-* 0 300 640 180
+      (sdl:draw-box-* 0 480 960 240
 		      :color sdl:*black*)
       (loop for i below (length strlist) do
 	   (let ((str (nth i strlist)))
 	     (unless (string= str "")
 	       (sdl:draw-string-solid-* str
-					20 (+ 320 (* i 40))))))
+					20 (+ 480 (* i 50))))))
       (when (or (key-down-p z) (key-down-p c))
 	(pop-state game))))
 

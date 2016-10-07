@@ -77,6 +77,7 @@
    '(:mc-right-atk "mc-right-atk.png" 96 64 288 64 10)
    '(:mc-back-atk "mc-back-atk.png" 96 128 288 128 10)
    '(:mc-front-atk "mc-front-atk.png" 96 128 288 128 10)
+   '(:item-container "shine.png" 32 32 64 32 10)
    '(:chototsu-front-dash "chototu-front-dash.png"
      48 64 96 64 10)
    '(:chototsu-back-dash "chototu-back-dash.png"
