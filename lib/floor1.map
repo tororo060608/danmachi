@@ -2,6 +2,7 @@
  :TABLE (W GAME-WALL 
   	SPACE GAME-FLOOR 
         P (PLAYER GAME-FLOOR)
+	n (nuko game-floor)
         b (bee pop-floor)
 	c (chototsu pop-floor)
 	d downstairs))
@@ -39,7 +40,7 @@ w w w w w w w w w w                                           c         w w w   
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
-w w w w w w w w w w           c                                         w w w                                 w w w w w 
+w w w w w w w w w w           b                                         w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                   c             w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
@@ -47,7 +48,7 @@ w w w w w w w w w w                                                     w w w   
 w w w w w w w w w w                                                     w w w w w                   w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w                   w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w                   w w w w w w w w w w 
-w w w w w w w w w w                                           c         w w w w w       w w w w w w w w w w w w w w w w 
+w w w w w w w w w w                                           b         w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 

@@ -8,10 +8,16 @@
   (super-arrmor nil))
 
 (defmethod update ((e enemy) game)
+  (call-next-method)
   (when (and (muteki e)
 	     (not (super-arrmor e)))
-      (setf (vx e) 0 (vy e) 0))
-  (call-next-method))
+    (setf (vx e) 0 (vy e) 0))
+  (when (and (not (alive e))
+	     (< (random 100) 30))
+    (add-object (make-instance 'item-container
+			       :point-x (point-x e)
+			       :point-y (point-y e))
+		game)))
 
 ;enemy bullet base class
 (define-class enemy-bullet (bullet)
@@ -218,11 +224,11 @@
   (attack-frame 0))
 
 (defun set-nway-bullet (obj bullet-sym n game
-			&key (step 30) (speed 5))
+			&key (step 30) (speed 5) ctheta)
   (let* ((v (a-to-b-vector obj (player game)
 			   #'point-x #'point-y))
-	 (ctheta (deg (atan-vec v)))
 	 (range (* step (1- n))))
+    (when (null ctheta) (setf ctheta (deg (atan-vec v))))
     (loop for i from (- (ash range -1))
                 to (ash range -1) by step
        do (let ((vec-x (cos (rad (+ ctheta i))))
@@ -282,3 +288,89 @@
 	(t (setf (attack-frame e) 0
 		 (state e) :chase))))
 
+(define-class nuko (enemy)
+  (width 128) (height 128)
+  (image (get-image :nuko-stand))
+  (standing-images (4dir-images :nuko-stand
+				:nuko-stand
+				:nuko-stand
+				:nuko-stand))
+  (step-images (4dir-animations :nuko-left-step
+				:nuko-left-step
+				:nuko-right-step
+				:nuko-left-step))
+  (state :stop)
+  (move-dir :left)
+  (stop-timer (make-timer 60))
+  (step-timer (make-timer 45))
+  (step-velocity 5)
+  (attack-mode 0)
+  (attack-frame 0))
+
+(defmethod change-dire-image ((e nuko) game)
+  (change-image e (getf (if (= (vx e) (vy e) 0)
+			    (standing-images e)
+			    (step-images e))
+			(direction e))))
+
+(define-class nuko-bullet (enemy-bullet)
+  (atk 30)
+  (image (get-image :test-bullet)))
+
+(define-class nuko-impact (enemy-bullet)
+  (width 384) (height 384)
+  (image (get-image :nuko-impact))
+  (atk 250)
+  (life 30))
+
+(defmethod update ((impact nuko-impact) game)
+  (when (zerop (decf (life impact)))
+    (kill impact)))
+
+(defmethod update ((enemy nuko) game)
+  (call-next-method)
+  (case (state enemy)
+    (:stop
+     (when (funcall (stop-timer enemy))
+       (case (move-dir enemy)
+	 (:left (setf (vx enemy) (- (step-velocity enemy))
+		      (move-dir enemy) :right))
+	 (:right (setf (vx enemy) (step-velocity enemy)
+		       (move-dir enemy) :left)))
+       (setf (state enemy) :step)))
+    (:step
+     (when (funcall (step-timer enemy))
+       (setf (vx enemy) 0) 
+       (if (zerop (setf (attack-mode enemy)
+			(mod (1+ (attack-mode enemy)) 3)))
+	   (progn 
+	     (setf (state enemy) :impact
+		   (image enemy) (get-animation :nuko-attack))
+	     (set-size-by-image enemy))
+	   (progn
+	     (setf (state enemy) :shot
+		   (image enemy) (get-image :nuko-stand))
+	     (set-size-by-image enemy)))))
+    (:impact
+     (incf (attack-frame enemy))
+     (cond ((= (attack-frame enemy) 50)
+	    (set-bullet enemy 'nuko-impact
+			(point-x enemy) (point-y enemy) game)
+	    (setf (image enemy)
+		  (get-image :nuko-impact-finish))
+	    (set-size-by-image enemy))
+	   ((= (attack-frame enemy) 100)
+	    (setf (attack-frame enemy) 0
+		  (state enemy) :stop))))
+    (:shot
+     (incf (attack-frame enemy))
+     (cond ((= (attack-frame enemy) 20)
+	    (set-nway-bullet enemy 'nuko-bullet 5 game))
+	   ((= (attack-frame enemy) 40)
+	    (set-nway-bullet enemy 'nuko-bullet 4 game))
+	   ((= (attack-frame enemy) 60)
+	    (set-nway-bullet enemy 'nuko-bullet 3 game)
+	    (setf (attack-frame enemy) 0
+		  (state enemy) :stop)))))
+  (when (not (alive enemy))
+    (push-stateset '(:darkening :gameclear) game)))

@@ -22,7 +22,7 @@ w w w                                         w w w w w w w w w w w w w w w w w 
 w w w                                                                                                                                                   w w w w 
 w w w                                                                                                                                                   w w w w 
 w w w                                                                                                                                                   w w w w 
-w w w         c                               c     w w w w w w w w w w w w w w w w w w w         c                                                     w w w w 
+w w w         r                               b     w w w w w w w w w w w w w w w w w w w         c                                                     w w w w 
 w w w                                               w w w w w w w w w w w w w w w w w w w                                         c                     w w w w 
 w w w                                               w w w w w w w w w w w w w w w w                                                                     w w w w 
 w w w                                               w w w w w w w w w w w w w w w w                                                               w w w w w w w 
@@ -32,10 +32,10 @@ w w w                                               w w w w w w w w w w w w w w 
 w w w                                 c             w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w w w w       w w w w w w w 
 w w w                                         w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w w w w       w w w w w w w 
 w w w                   d                     w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w w w w       w w w w w w w 
-w w w         c                               w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w                         w 
+w w w         b                               w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w                         w 
 w w w                                         w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w                         w 
 w w w                                         w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w                         w 
-w w w                                         w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w     c                   w 
+w w w                                         w w w w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w     b                   w 
 w w w                                               w w w w w w w w w w w w w w w w       w w w w w w w w w w w w w w w w w w w w w w                         w 
 w w w                                               w w w w w w w w w w w w w w w                                                 w w                         w 
 w w w                                                                                                                             w w                         w 
@@ -62,7 +62,7 @@ w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w       w w w w                     w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                     u p             w w w       w w w w                     w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w       w w w w w w w w w w w       w 
-w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w   c   w w w w w w w w w w w       w 
+w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w   b   w w w w w w w w w w w       w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w       w w w w w w w w w w w       w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w       w w w w w w w w w w w       w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w                                   w 
@@ -70,7 +70,7 @@ w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                     w w w                                   w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                   w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                   w 
-w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                         c         w 
+w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                         b         w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                   w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                   w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                   w 

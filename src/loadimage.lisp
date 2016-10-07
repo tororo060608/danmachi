@@ -40,6 +40,7 @@
 (defun gameimage-load ()
   (load-lib-images :title "title.png"
 		   :gameover "gameover.png"
+		   :gameclear "cleared.png"
 		   :mc-front "mc-front.png"
 		   :mc-back "mc-back.png"
 		   :mc-right "mc-right.png"
@@ -62,6 +63,13 @@
 		   :chototsu-back "chototu-back.png"
 		   :chototsu-left "chototu-left.png"
 		   :chototsu-right "chototu-right.png"
+		   :modoki-front "modoki-front.png"
+		   :modoki-back "modoki-back.png"
+		   :modoki-left "modoki-left.png"
+		   :modoki-right "modoki-right.png"
+		   :nuko-stand "nuko-front.png"
+		   :nuko-impact "nuko-atk_b.png"
+		   :nuko-impact-finish "nuko-atk_c.png"
 		   ))
 
 
@@ -93,4 +101,18 @@
    '(:red-bee-right "sinugayoi-red-right.png"
      48 48 96 48 10)
    '(:red-bee-left "sinugayoi-red-left.png"
-     48 48 96 48 10)))
+     48 48 96 48 10)
+   '(:modoki-left-walk "modoki-left-walk.png"
+     64 64 128 64 10)
+   '(:modoki-right-walk "modoki-right-walk.png"
+     64 64 128 64 10)
+   '(:modoki-front-walk "modoki-front-walk.png"
+     64 64 128 64 10)
+   '(:modoki-back-walk "modoki-back-walk.png"
+     64 64 128 64 10)
+   '(:nuko-right-step "nuko-right-move.png"
+     128 128 256 128 10)
+   '(:nuko-left-step "nuko-left-move.png"
+     128 128 256 128 10)
+   '(:nuko-attack "nuko-atk_a.png"
+     128 128 640 128 10)))
