@@ -281,3 +281,4 @@
 	((< (attack-frame e) 200))
 	(t (setf (attack-frame e) 0
 		 (state e) :chase))))
+
