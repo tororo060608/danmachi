@@ -3,8 +3,8 @@
 ;;player object
 (define-class player (gamecharacter)
   (player-speed 5)
-  (width 16)
-  (height 32)
+  (width 32)
+  (height 64)
   (draw-width 32)
   (draw-height 64)
   (player-state :stand)
