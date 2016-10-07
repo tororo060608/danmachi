@@ -88,4 +88,8 @@
    '(:bee-right "sinugayoi-right.png"
      48 48 96 48 10)
    '(:bee-left "sinugayoi-left.png"
+     48 48 96 48 10)
+   '(:red-bee-right "sinugayoi-red-right.png"
+     48 48 96 48 10)
+   '(:red-bee-left "sinugayoi-red-left.png"
      48 48 96 48 10)))

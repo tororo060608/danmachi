@@ -4,7 +4,14 @@
 (define-class enemy (gamecharacter)
   (width 32)
   (height 32)
-  (atk 10))
+  (atk 10)
+  (super-arrmor nil))
+
+(defmethod update ((e enemy) game)
+  (when (and (muteki e)
+	     (not (super-arrmor e)))
+      (setf (vx e) 0 (vy e) 0))
+  (call-next-method))
 
 ;enemy bullet base class
 (define-class enemy-bullet (bullet)
@@ -182,11 +189,13 @@
 		(uvec e (player game) #'point-x #'point-y)
 	      (setf (vx e) (* (dash-speed e) vx)
 		    (vy e) (* (dash-speed e) vy)
-		    (atk e) (dash-atk e))))
+		    (atk e) (dash-atk e)
+		    (super-arrmor e) t)))
 	   ((< (attack-frame e) 55))
 	   ((< (attack-frame e) 70) (setf (vx e) 0
 					  (vy e) 0
-					  (atk e) (normal-atk e)))
+					  (atk e) (normal-atk e)
+					  (super-arrmor e) nil))
 	   (t (setf (attack-frame e) 0
 		    (state e) :chase)))))
   (call-next-method))
@@ -204,22 +213,37 @@
   (random-turn-timer (make-timer (+ 120 (random 120))))
   (attack-charge (charge-timer 120 :charge :attack))
   (walk-speed 1)
-  (bullet-speed 5)
+  (bullet-speed 3)
   (atk 10)
   (attack-frame 0))
 
-(defun set-bee-bullet (bee game)
-  (let* ((v (a-to-b-vector bee (player game)
+(defun set-nway-bullet (obj bullet-sym n game
+			&key (step 30) (speed 5))
+  (let* ((v (a-to-b-vector obj (player game)
 			   #'point-x #'point-y))
-	 (ctheta (deg (atan-vec v))))
-    (loop for i from -30 to 30 by 30
+	 (ctheta (deg (atan-vec v)))
+	 (range (* step (1- n))))
+    (loop for i from (- (ash range -1))
+                to (ash range -1) by step
        do (let ((vec-x (cos (rad (+ ctheta i))))
 		(vec-y (sin (rad (+ ctheta i)))))
-	    (set-bullet bee 'tenemy2-bullet
-			(* (bullet-speed bee) vec-x)
-			(* (bullet-speed bee) vec-y)
+	    (set-bullet obj bullet-sym
+			(* speed vec-x)
+			(* speed vec-y)
 			game)))))
 
+(defgeneric bee-attack (bee game))
+(defmethod bee-attack ((e bee) game)
+  (incf (attack-frame e))
+  (cond ((< (attack-frame e) 30)
+	 (setf (vx e) 0 (vy e) 0))
+	((= (attack-frame e) 30)
+	 (set-nway-bullet e 'tenemy2-bullet 3 game
+			  :speed (bullet-speed e)))
+	((< (attack-frame e) 100))
+	(t (setf (attack-frame e) 0
+		 (state e) :chase))))
+  
 (defmethod update ((e bee) (game game))
   (case (state e)
     (:search 
@@ -236,12 +260,24 @@
 		(around-p (player game) e (attack-dict e)))
        (setf (state e) :attack)
        (funcall (attack-charge e) :attack)))
-    (:attack (incf (attack-frame e))
-     (cond ((< (attack-frame e) 30) (setf (vx e) 0
-					  (vy e) 0))
-	   ((= (attack-frame e) 30)
-	    (set-bee-bullet e game))
-	   ((< (attack-frame e) 100))
-	   (t (setf (attack-frame e) 0
-		    (state e) :chase)))))
+    (:attack (bee-attack e game)))
   (call-next-method))
+
+(define-class red-bee (bee)
+  (standing-images (4dir-animations :red-bee-right
+				    :red-bee-right
+				    :red-bee-right
+				    :red-bee-left)))
+(defmethod bee-attack ((e red-bee) game)
+  (incf (attack-frame e))
+  (cond ((< (attack-frame e) 30)
+	 (setf (vx e) 0 (vy e) 0))
+	((= (attack-frame e) 30)
+	 (set-nway-bullet e 'tenemy2-bullet 3 game
+			  :speed (bullet-speed e)))
+	((= (attack-frame e) 80)
+	 (set-nway-bullet e 'tenemy2-bullet 4 game
+			  :speed (bullet-speed e)))
+	((< (attack-frame e) 200))
+	(t (setf (attack-frame e) 0
+		 (state e) :chase))))

@@ -3,7 +3,7 @@
 (define-class gamecharacter (gameobject)
   (hp 100)
   (muteki nil)
-  (muteki-timer (make-timer 10))
+  (muteki-timer (make-timer 30))
   (direction :front)
   ; 立っている時の絵
   ; plistで:front, :back, :left, :rightの4つの要素を持つ
