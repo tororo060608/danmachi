@@ -55,6 +55,6 @@
 
 (defparameter *ttf-font-misaki*
   (make-instance 'sdl:ttf-font-definition
-		 :size 28
+		 :size 42
 		 :filename (lib-path "misaki_ttf/k8x12.ttf")))
 

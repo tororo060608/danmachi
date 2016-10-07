@@ -106,6 +106,17 @@
   (when (around-p chara floor (search-dist floor))
     (incf (around-chara floor))))
 
+(defcollide (player player) (item item-container)
+  (with-slots (c) (keystate game)
+    (when (and (collidep player item)
+	       (key-down-p c))
+      (push-item (itemsym item) player)
+      (push-message-state
+       (list (format nil "~Aを手に入れた"
+		     (name (get-item (itemsym item)))))
+       game)
+      (kill item))))
+
 (defparameter *npc-react-dist* 60)
 (defcollide (player player) (npc npc)
   (with-slots (c) (keystate game)

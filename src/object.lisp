@@ -235,6 +235,12 @@
 (defmethod update ((b bullet) (game game))
   (call-next-method))
 
+(define-class item-container (gameobject)
+  (width 32)
+  (height 32)
+  (image (get-animation :item-container))
+  (itemsym 'cider))
+
 ;;npc
 (define-class npc (gameobject)
   (width 32)
