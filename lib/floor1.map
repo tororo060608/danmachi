@@ -3,8 +3,8 @@
   	SPACE GAME-FLOOR 
         P (PLAYER GAME-FLOOR)
         b (bee pop-floor)
-	c (chototsu pop-floor))
-	d downstairs)
+	c (chototsu pop-floor)
+	d downstairs))
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
@@ -64,4 +64,4 @@ w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w               
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                         w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                         w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                               w w w w w w w 
-a w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
+w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
