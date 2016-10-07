@@ -35,6 +35,7 @@
 	   NEW-JOYSTICK 
 	   DEFINPUT 
 	   RAD
+	   DEG
 	   VEC-ABS
 	   EUC-DIST
 	   UNIVEC
