@@ -26,7 +26,7 @@
 		  40 40)
     (sdl:draw-box-* 80 20 200 20 :color sdl:*red*)
     (sdl:draw-box-* 80 20
-		    (round (* (/ hp maxhp) 200)) 20
+		    (max 0 (round (* (/ hp maxhp) 200))) 20
 		    :color sdl:*green*)))
 
 (defun gaming-state (game)
