@@ -77,7 +77,7 @@
 
 ;bullet
 (define-class tenemy2-bullet (enemy-bullet)
-  (atk 100)
+  (atk 10)
   (image (get-image :test-bullet)))
 
 (defmethod update ((e test-enemy2) (game game))
@@ -147,7 +147,7 @@
   (random-turn-timer (make-timer (+ 120 (random 120))))
   (attack-charge (charge-timer 120 :charge :attack))
   (walk-speed 1)
-  (dash-speed 5)
+  (dash-speed 3)
   (normal-atk 10)
   (dash-atk 15)
   (attack-frame 0))
@@ -191,3 +191,57 @@
 		    (state e) :chase)))))
   (call-next-method))
 
+;; 蜂
+(define-class bee (enemy)
+  (image (get-animation :bee-right))
+  (standing-images (4dir-animations :bee-right
+				    :bee-right
+				    :bee-right
+				    :bee-left))
+  (state :search)
+  (react-dist 400)
+  (attack-dict 200)
+  (random-turn-timer (make-timer (+ 120 (random 120))))
+  (attack-charge (charge-timer 120 :charge :attack))
+  (walk-speed 1)
+  (bullet-speed 5)
+  (atk 10)
+  (attack-frame 0))
+
+(defun set-bee-bullet (bee game)
+  (let* ((v (a-to-b-vector bee (player game)
+			   #'point-x #'point-y))
+	 (ctheta (deg (atan-vec v))))
+    (loop for i from -30 to 30 by 30
+       do (let ((vec-x (cos (rad (+ ctheta i))))
+		(vec-y (sin (rad (+ ctheta i)))))
+	    (set-bullet bee 'tenemy2-bullet
+			(* (bullet-speed bee) vec-x)
+			(* (bullet-speed bee) vec-y)
+			game)))))
+
+(defmethod update ((e bee) (game game))
+  (case (state e)
+    (:search 
+     (when (around-p (player game) e (react-dist e))
+       (setf (state e) :chase))
+     (when (funcall (random-turn-timer e))
+       (set-4way-randv e (walk-speed e))))
+    (:chase 
+     (destructuring-bind (vx vy) 
+		(uvec e (player game) #'point-x #'point-y)
+	      (setf (vx e) (* (walk-speed e) vx)
+		    (vy e) (* (walk-speed e) vy)))
+     (when (and (funcall (attack-charge e) :charge)
+		(around-p (player game) e (attack-dict e)))
+       (setf (state e) :attack)
+       (funcall (attack-charge e) :attack)))
+    (:attack (incf (attack-frame e))
+     (cond ((< (attack-frame e) 30) (setf (vx e) 0
+					  (vy e) 0))
+	   ((= (attack-frame e) 30)
+	    (set-bee-bullet e game))
+	   ((< (attack-frame e) 100))
+	   (t (setf (attack-frame e) 0
+		    (state e) :chase)))))
+  (call-next-method))

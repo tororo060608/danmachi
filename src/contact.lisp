@@ -76,6 +76,9 @@
   (when (collidep player enemy)
     (damage enemy player)))
 
+(defcollide (wall game-wall) (bullet bullet)
+  (when (collidep wall bullet)
+    (kill bullet)))
 (defcollide (player player) (bullet enemy-bullet)
   (when (collidep player bullet)
     (damage bullet player)))

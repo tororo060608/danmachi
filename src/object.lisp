@@ -153,7 +153,6 @@
 		      (height object)
 		      :color sdl:*blue*)))
 
-
 (defmethod update ((object gameobject) (game game))
   (incf (point-x object) (vx object))
   (incf	(point-y object) (vy object)))

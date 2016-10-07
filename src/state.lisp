@@ -44,16 +44,17 @@
 	       (collide-object-list game))
   (unless (alive (player game))
     (pop-state game)
-    (push-state :gameover game))
+    (push-stateset '(:darkening :gameover) game))
   (draw-game game)
   (display-player-hp (player game)))
 
 (defun title-state (game)
-  (with-slots (up down left right z)
+  (with-slots (z)
       (keystate game)
-    (sdl:clear-display sdl:*black*)
-    (sdl:draw-string-solid-* "楽しい人生"
-			     30 30)
+    (sdl:clear-display sdl:*white*)
+    (sdl:draw-surface-at-* (get-image :title) 180 150)
+    (sdl:draw-string-solid-* "Press Z-KEY to START" 380 450
+			     :color sdl:*black*)
     (when (key-down-p z)
       (pop-state game)
       (push-stateset '(:init-game
@@ -64,8 +65,8 @@
 (defun gameover-state (game)
   (with-slots (up down left right z)
       (keystate game)
-    (sdl:draw-string-solid-* "gameover"
-			     200 150)
+    (sdl:clear-display sdl:*white*)
+    (sdl:draw-surface-at-* (get-image :gameover) 230 85)	
     (when (key-down-p z)
       (pop-state game)
       (push-state :title game))))

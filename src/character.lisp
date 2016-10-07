@@ -68,3 +68,4 @@
   (when (direction-change-p char)
     (change-direction char game)
     (change-dire-image char game)))
+
