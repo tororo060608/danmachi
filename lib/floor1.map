@@ -1,11 +1,10 @@
 (:SIZE (60 60) 
  :TABLE (W GAME-WALL 
   	SPACE GAME-FLOOR 
-	P (PLAYER GAME-FLOOR)
-	q (test-enemy game-floor) 
-	a (test-enemy2 game-floor)
-	e (game-floor test-enemy-react)
-	c (chototsu game-floor)))
+        P (PLAYER GAME-FLOOR)
+        b (bee pop-floor)
+	c (chototsu pop-floor))
+	d downstairs)
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w 
@@ -36,32 +35,32 @@ w w w w w w w w w w                                                 w w w w w w 
 w w w w w w w w w w                                                               w       w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                                                           w w w w w 
 w w w w w w w w w w                                                                                           w w w w w 
+w w w w w w w w w w                                           c         w w w             c                   w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
-w w w w w w w w w w                                                     w w w             a                   w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w           c                                         w w w                                 w w w w w 
-w w w w w w w w w w                                                     w w w                                 w w w w w 
+w w w w w w w w w w                                                     w w w                   c             w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w                                 w w w w w 
 w w w w w w w w w w                                                     w w w w w                   w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w                   w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w                   w w w w w w w w w w 
+w w w w w w w w w w                                           c         w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
 w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
-w w w w w w w w w w                                                     w w w w w       w w w w w w w w w w w w w w w w 
+w w w w w w w w w w                                                     w w                               w w w w w w w 
+w w w w w w w w w w                                                     w w                               w w w w w w w 
+w w w w w w w w w w                   c                                 w w                               w w w w w w w 
+w w w w w w w w w w                                                     w w             c                 w w w w w w w 
 w w w w w w w w w w                                                     w w                               w w w w w w w 
 w w w w w w w w w w                                                     w w                               w w w w w w w 
 w w w w w w w w w w                                                     w w                               w w w w w w w 
-w w w w w w w w w w                                                     w w                               w w w w w w w 
-w w w w w w w w w w                                                     w w                               w w w w w w w 
-w w w w w w w w w w                                                     w w                               w w w w w w w 
-w w w w w w w w w w                                                     w w             e                 w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w       w w                               w w w w w w w 
-w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                         w w w w w w w 
+w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                               d         w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                         w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                                         w w w w w w w 
 w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w w                               w w w w w w w 
