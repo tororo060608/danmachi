@@ -102,6 +102,10 @@
       (incf (map-id game))
       (push-stateset '(:darkening :init-map) game))))
 
+(defcollide (chara gamecharacter) (floor pop-floor)
+  (when (around-p chara floor (search-dist floor))
+    (incf (around-chara floor))))
+
 (defparameter *npc-react-dist* 60)
 (defcollide (player player) (npc npc)
   (with-slots (c) (keystate game)

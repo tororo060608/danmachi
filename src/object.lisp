@@ -8,6 +8,7 @@
   object-list
   floor-list
   draw-floor-list
+  draw-object-list
   update-object-list
   collide-object-list
   player
@@ -93,6 +94,10 @@
 	 (lambda (obj) 
 	   (out-of-gamearea-p obj game))
 	 (collide-object-list game))
+	(draw-object-list game)
+	(remove-if (lambda (obj)
+		     (typep obj 'effect-floor))
+		   (update-object-list game))
 	(draw-floor-list game)
 	(remove-if (lambda (obj) 
 		     (out-of-gamearea-p obj game))
@@ -100,7 +105,7 @@
 
 (defun draw-game (game)
   (mapc (lambda (obj) (draw obj game)) (draw-floor-list game))
-  (mapc (lambda (obj) (draw obj game)) (update-object-list game)))
+  (mapc (lambda (obj) (draw obj game)) (draw-object-list game)))
 
 ; add new object
 (defmethod add-object ((obj gameobject) (game game))
@@ -192,6 +197,9 @@
   (push floor (floor-list game)))
 
 (define-class effect-floor (game-floor))
+(defmethod add-object ((floor effect-floor) (game game))
+  (call-next-method)
+  (push floor (object-list game)))
 
 (define-class upstairs (effect-floor)
   (image (get-image :upstairs)))
@@ -199,8 +207,27 @@
 (define-class downstairs (effect-floor)
   (image (get-image :downstairs)))
 
-(defmethod add-object ((floor effect-floor) (game game))
-  (push floor (object-list game)))
+(define-class pop-floor (effect-floor)
+  (image (get-image :floor))
+  (pop-timer (make-timer 600))
+  (search-dist 300)
+  (around-chara 0)
+  (enemy-syms '(chototsu bee red-bee test-enemy test-enemy2))
+  (probability 30))
+
+
+(defmethod update((floor pop-floor) game)
+  (when (and (funcall (pop-timer floor))
+	     (zerop (around-chara floor))
+	     (< (random 1000) (* (probability floor) 10)))
+    (let ((esym
+	   (nth (random (length (enemy-syms floor)))
+		(enemy-syms floor))))
+      (add-object (make-instance esym
+				 :point-x (point-x floor)
+				 :point-y (point-y floor))
+		  game)))
+  (setf (around-chara floor) 0))
 
 ;bullet base class
 (define-class bullet (gameobject))
